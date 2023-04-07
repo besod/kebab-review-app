@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="grid grid-cols-1 grid-rows-4 gap-12 mx-20 mt-6">
+    {% for review in reviews %}
+    <div class="rounded shadow-2xl border-8 border-slate-500">
+        {% if review.picture %}
+        <img class="m-0 p-0"
+        src="{{ review.image.url }}" alt="{{ review.image }} image"/>
+        {% endif %}
+        <div class="bg-white/50 h-56 w-full p-0">
+            <h2 class="text-xl p-5 underline underline-offset-6 text-gray-600 font-bold"
+            >{{ review.restaurant }}</h2>
+            <h2 class="text-xl p-5 underline underline-offset-6 text-gray-600 font-bold"
+            >{{ review.menu }}</h2>
+            <p class="px-5 text-gray-600 font-bold">{{ review.price }}</p>
+            <p class="px-5 text-gray-600">{{ review.comment }}</p>
+            {% load static %}
+            <p class=""><img src="{% static 'core/icon-favorite.png' %}" alt="heart"></p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div> 
+{% endblock %}

@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" href="{% static 'main/style.css' %}" /> {% endcomment %}
+    <link rel="icon" type="image/png" href="{% static 'core/icon-kebab.png' %}" />
+    {% comment %} <a target="_blank" href="https://icons8.com/icon/YWkmvnCzlzhI/kebab">Kebab</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> {% endcomment %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Kebab Now</title>
+</head>
+<body class="bg-yellow-400/80">
+    <header id="home" class="m-12 flex items-center justify-around">
+        <div class="flex flex-col items-center">
+          <a href="http://127.0.0.1:8000/"><img src="{% static 'core/kebab.webp' %}" alt="Kebab"
+            class="w-72 rounded-full drop-shadow-2xl hover:animate-spin"></a>
+          <p class="mt-5 text-2xl font-bold italic text-center text-slate-900">
+            Find today's best
+            <span class="before:block before:absolute before:-inset-1 before:-skew-y-3
+             before:bg-pink-500 relative inline-block">
+              <span class="relative text-white">kebab</span></span> here!</p>
+        </div>
+        <nav class="">
+          <ul class="flex text-5xl font-bold italic space-x-10">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'index' %}#about">About</a></li>
+            {% comment %} <li><a href="{% url 'login' %}#login">Login</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li> {% endcomment %}
+            {% comment %} <li><a href="{% url 'search' %}">Search</a></li> {% endcomment %}
+          </ul>
+        </nav>
+      </header>
+
+      {% block content %}{% endblock %}
+
+      <footer class="">
+        <ul class="">
+            {% comment %} <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'index' %}#about">About</a></li>
+            <li><a href="{% url 'login' %}#login">Login</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li> {% endcomment %}
+            {% comment %} <li><a href="{% url 'search' %}">Search</a></li> {% endcomment %}
+        </ul>
+      </footer>
+</body>
+</html>

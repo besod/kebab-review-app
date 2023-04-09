@@ -1,12 +1,25 @@
 {% extends 'core/base.html' %}
 {% block content %}
-<div>
-    <h1>Signup</h1>
-    <form action="{% url 'signup' %}" method='POST'>
+<div class="text-center">
+    <h1 class="text-2xl font-bold">Signup</h1>
+    <form action="{% url 'signup' %}" method="POST">
         {% csrf_token %}
         <div>
-            {{ form.as_p }}
-            <input type="submit" value="Signup">
+            {% for field in form %}
+            <dt>
+                <label class="font-bold text-lg" 
+                for="{{ field.id_for_label }}">{{ field.label }}</label>
+            </dt>
+            <dt>{{ field }}</dd>
+                {% if field.errors %}
+                <p class="text-gray-600">{{ field.errors }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div>
+            <button type="submit"
+            class="bg-red-700 hover:bg-red-500 font-bold my-3 py-1 px-2 rounded-lg">
+            Submit</button>
         </div>
     </form>
 </div>

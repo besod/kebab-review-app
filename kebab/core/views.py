@@ -1,11 +1,10 @@
 from django.shortcuts import render
-
-# Create your views here.
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
-from django.contrib.auth.models import User
 from .forms import SignupForm, LoginForm, ContactForm
 from .models import Contact
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -31,6 +30,12 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
+            # CustomUser.objects.create(
+            #     username = form.cleaned_data['username'],
+            #     email = form.cleaned_data['email'],
+            #     password = form.cleaned_data['password'],
+            # )
+            return render(request, 'core/userpage.html', status=200)
     else:
         form = SignupForm()
     context = {
@@ -41,9 +46,11 @@ def signup(request):
 def logout(request):
     pass
 
+@login_required(login_url='core/login.html')
 def userpage(request):
     pass
 
+@login_required(login_url='core/login.html')
 def detail(request):
     pass
 
@@ -52,15 +59,11 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            title = form.cleaned_data['title']
-            message = form.cleaned_data['message']
             Contact.objects.create(
-                name = name,
-                email = email,
-                title = title,
-                message = message
+                name = form.cleaned_data['name'],
+                email = form.cleaned_data['email'],
+                title = form.cleaned_data['title'],
+                message = form.cleaned_data['message']
             )
         context = {
             'form': form,

@@ -1,28 +1,39 @@
 from django import forms
-from django.contrib.auth.models import User
+from .models import CustomUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class SignupForm(UserCreationForm):
-    username = forms.CharField(max_length=100, required=True, widget=forms.TextInput(
-        attrs={'class': 'form-input', 'placeholder': 'Username'}
-    ))
-    email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(
-        attrs={'class': 'form-input', 'placeholder': 'Email'}
-    ))
-    password1 = forms.CharField(required=False, widget=forms.PasswordInput(
-        attrs={'class': 'form-input', 'placeholder': 'Password'}
-    ))
-    password2 = forms.CharField(required=False, widget=forms.PasswordInput(
-        attrs={'class': 'form-input', 'placeholder': 'Confirm Password'}
-    ))
+    username = forms.CharField(
+        max_length=100, required=True, widget=forms.TextInput(
+        attrs={'class': 'form-input mb-1'})
+    )
+    email = forms.EmailField(
+        max_length=254, required=True, widget=forms.EmailInput(
+        attrs={'class': 'form-input mb-1'})
+    )
+    password1 = forms.CharField(
+        required=True, widget=forms.PasswordInput(
+        attrs={'class': 'form-input mb-1'})
+    )
+    password2 = forms.CharField(
+        required=True, widget=forms.PasswordInput(
+        attrs={'class': 'form-input'})
+    )
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['username', 'email', 'password1', 'password2']
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if CustomUser.objects.filter(username=username).exists():
+            raise forms.ValidationError('This username already exist.')
+        return username
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError('This email already exists. Try again!')
+        if CustomUser.objects.filter(email=email).exists():
+            raise forms.ValidationError('This email already exists.')
         return email
 
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# Use Django's default function to create user
+
 class CustomUser(AbstractUser):
     email = models.EmailField(blank=False)
     first_name = None

@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+<div class="mt-20 text-center">
+  <h1class="mb-10 text-center text-3xl text-gray-500 font-bold bg-yellow-200/80">
+    Contact
+  </h1>
+  <div class="text-center mb-20 text-gray-600">
+    <form action="{% url 'contact' %}" method="POST">
+      {% csrf_token %}
+      <div class="content-center">
+        <table class="mx-auto">
+          {{ form.as_table }}
+        </table>
+      </div>
+      <br/>
+      <div>
+        <input type="submit" value="Send"
+        class="font-bold text-xl bg-yellow-200 py-2 w-32 rounded-lg text-gray-600"/>
+      </div>
+    </form>
+    <p class="bg-amber-500/80 rounded-xl text-lg py-3 font-bold text-gray-600 my-10">
+      <a href="{% url 'home' %}">Return to Home</a>
+    </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

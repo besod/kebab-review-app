@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {%load static%} {% block content %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <link rel="stylesheet" href="{% static 'css/public/input.css' %}" /> -->
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: "#da373d",
+          },
+        },
+      },
+    };
+  </script>
+
+  <title>Login</title>
+</head>
+
+<body class="flex flex-col items-center justify-center h-screen bg-white">
+  
+    <section style="border: 1px solid gray; padding: 2rem; border-radius: 0.5rem;">
+      <div class="bg-green-500 w-full mb-2 py-1">
+        <h2 class="text-3xl font-bold mb-4 text-center text-white">
+          LogIn To Your Account
+        </h2>
+      </div>
+      {% if error %}
+      <p><strong>Invalid email or password.</strong></p>
+      {% endif %}
+
+      <form method="post" class="w-full max-w-md">
+        <div class="mb-4 block text-dark-700 font-bold text-lg">
+          {% csrf_token %} {{ form.as_p }}
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mt-4">
+            Log In
+          </button>
+          <div class="mt-4">
+            <p class="text-gray-600">
+              Don't have an account?
+              <a href="#" class="underline text-blue-500 hover:text-blue-800">Register an account here</a>
+            <div>
+              <a href="#" class="text-blue-500 hover:text-blue-800">Forgot password?</a>
+            </div>
+            </p>
+          </div>
+        </div>
+      </form>
+
+    </section>
+
+    {% endblock content %}
+</body>
+
+</html>

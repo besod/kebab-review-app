@@ -1,0 +1,21 @@
+<!-- templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="{% static 'core/icon-kebab.png' %}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  
+  <body>
+    <!-- navbar -->
+
+    {% block content %}
+
+    {% endblock %}
+
+  </body>
+</html>

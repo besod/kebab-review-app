@@ -1,30 +1,6 @@
-{% extends 'base.html' %} {%load static%} {% block content %}
-<html lang="en">
+{% extends 'core/base.html' %} {%load static%} {% block content %}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- <link rel="stylesheet" href="{% static 'css/public/input.css' %}" /> -->
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            clifford: "#da373d",
-          },
-        },
-      },
-    };
-  </script>
-
-  <title>Login</title>
-</head>
-
-<body class="flex flex-col items-center justify-center h-screen bg-white">
-  
+<div class="flex flex-col items-center justify-center h-screen bg-white">
     <section style="border: 1px solid gray; padding: 2rem; border-radius: 0.5rem;">
       <div class="bg-green-500 w-full mb-2 py-1">
         <h2 class="text-3xl font-bold mb-4 text-center text-white">
@@ -55,10 +31,6 @@
           </div>
         </div>
       </form>
-
     </section>
-
-    {% endblock content %}
-</body>
-
-</html>
+  </div>
+  {% endblock content %}

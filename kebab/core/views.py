@@ -10,16 +10,24 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     context = {}
     context['user'] = CustomUser.objects.all()
-    return render(request, 'home.html', context)
+    return render(request, 'core/home.html', context)
+
+def top(request):
+    context ={
+        'reviews': Review.objects.all(),
+        'menu': Menu.objects.all(),
+        'restaurants': Restaurant.objects.all()
+    }
+    return render(request, 'core/top.html', context)
 
 
-# def detail(request, id):
-#     context = {}
-#     context['review'] = Review.objects.get(id=id)
-#     return render(request, 'detail.html', context, status=200)
-
-def detail(request):
-    pass
+def detail(request, id):
+    context = {
+        'review': Review.objects.get(id=id),
+        'menu': Menu.objects.get(id=id),
+        'restaurants': Restaurant.objects.get(id=id)
+    }
+    return render(request, 'core/detail.html', context, status=200)
 
 
 def signup(request):
@@ -28,7 +36,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('core:top')
     else:
         form = SignupForm()
     return render(request, 'account/signup.html', {'form': form})
@@ -73,18 +81,15 @@ def contact(request):
             Contact.objects.create(
                 name = form.cleaned_data['name'],
                 email = form.cleaned_data['email'],
-                title = form.cleaned_data['title'],
                 message = form.cleaned_data['message']
             )
-        context = {
-            'form': form,
-        }
+        return redirect('core:home')
     else:
         form = ContactForm()
         context = {
             'form': form
         }
-        return render(request, 'contact.html', context)
+        return render(request, 'core/contact.html', context)
 
 
 # When inplement create_review function, use this maybe

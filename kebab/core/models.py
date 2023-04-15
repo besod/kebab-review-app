@@ -111,7 +111,7 @@ class Review(models.Model):
 
 class Contact(models.Model):
     name = models.CharField(max_length=100, null=False)
-    email = models.EmailField(max_length=254, null=False, unique=True)
+    email = models.EmailField(max_length=254, null=False)
     message = models.TextField(null=False)
     created_at = models.DateField(auto_now=True)
 

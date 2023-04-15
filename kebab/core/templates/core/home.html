@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 {% block content %}
 {% load static %}
 
@@ -15,16 +15,15 @@
     </div>
     <div class="font-bold text-black mb-5">
       <ul class="flex text-3xl font-bold italic space-x-10">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'home' %}#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="{% url 'core:home' %}">Home</a></li>
+        <li><a href="{% url 'core:home' %}#about">About</a></li>
+        <li><a href="{% url 'core:contact' %}">Contact</a></li>
       </ul>
     </div>
   </nav>
 </header>
 
 <aside class="w-56 fixed top-28 left-0 bottom-0 z-50 h-screen bg-green-300/70 p-3 mt-2">
-
 
   <div class="flex my-5 text-center justify-center">
     <ul class="font-bold">
@@ -46,7 +45,8 @@
       {% endif %}
     </ul>
   </div>
-
+  <div class="p-10">
+    
   <div>
     <form action=""></form>
   </div>

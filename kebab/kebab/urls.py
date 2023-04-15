@@ -22,8 +22,8 @@ from django.views.generic.base import TemplateView  # Add this
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(
-        template_name='home.html'), name='home'),  # Add this
+    # path('', TemplateView.as_view(
+    #     template_name='home.html'), name='home'),  # Add this
     path('core/', include(('core.urls', 'core'), namespace='core'))  # Add this
 ]
 # Configurations to import.Make sure that the static files run.

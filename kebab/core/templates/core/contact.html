@@ -1,15 +1,14 @@
-{% extends 'core/base.html' %} {%load static%} {% block content %}
+{% extends 'core/base.html' %} {% block content %}
 
-<div class="flex flex-col items-center justify-center h-screen">
-  
+<div class="flex flex-col items-center justify-center h-screen my-12">
   <section style="border: 1px solid gray; border-radius: 0.5rem;"
   class="py-6 px-16 bg-yellow-100">
     <div class="bg-green-500 w-full mb-2 py-1 rounded-sm">
       <h2 class="text-3xl font-bold my-2 text-center text-white">
-        Sign Up Form
+        Contact
       </h2>
     </div>
-    <form method="POST" class="w-full max-w-md">
+    <form action="{% url 'core:contact' %}" method="POST" class="w-full max-w-md">
       <div class="mb-4 block text-dark-700 font-bold text-lg">
         {% csrf_token %}
         {% for field in form %}
@@ -28,16 +27,12 @@
         class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mt-4">
         Submit</button>
         <div class="mt-1">
-          <p class="text-gray-600">
-            Cancel to register?<br>
-            <a href="{% url 'core:top' %}" class="underline text-blue-500 hover:text-blue-800">
-              Back to Top page</a>
-          </p>
+            <a href="{% url 'core:home' %}" 
+            class="underline text-blue-500 hover:text-blue-800">Back to Top page</a>
         </div>
       </div>
     </form>
   </section>
-
 </div>
 
-{% endblock content %}
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'core/base.html' %}
+{% block content %}
+{% load static %}
+
+<header id="home" class="bg-yellow-300 py-3 px-16 fixed top-0 left-0 right-0 z-50">
+  <nav class="flex justify-between items-center">
+    <div class="flex justify-between items-center space-x-5">
+      <a href="http://127.0.0.1:8000/"><img src="{% static 'core/kebab.webp' %}" alt="Kebab"
+      class="w-24 rounded-3xl drop-shadow-2xl hover:animate-pulse"></a>
+      <p class="mt-2 text-3xl font-bold italic text-slate-900">
+        Find best<span class="before:block before:absolute before:-inset-1 before:-skew-y-3
+        before:bg-pink-500 relative inline-block mx-2">
+        <span class="relative text-white">kebab</span></span>!
+      </p>
+    </div>
+    <div class="font-bold text-black mb-5">
+      <ul class="flex text-3xl font-bold italic space-x-10">
+        <li><a href="{% url 'core:home' %}">Home</a></li>
+        <li><a href="{% url 'core:home' %}#about">About</a></li>
+        <li><a href="{% url 'core:contact' %}">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<aside class="w-56 fixed top-28 left-0 bottom-0 z-50 h-screen bg-green-300/70 p-3 mt-2">
+
+
+  <div class="flex my-5 text-center justify-center">
+    <ul class="font-bold">
+      {% if user.is_authenticated %}
+      <!-- fetch user from database -->
+      <li>
+        <p>Hi {{ user.username }}!</p>
+        <a href="{% url 'core:logout' %}">Log Out</a>
+      </li>
+      {% else %}
+      <li>
+        <p class="underline mb-1">You are not logged in</p>
+        <div class="space-x-4 text-xl">
+          <a href="{% url 'core:login' %}"  class="hover:text-green-700">Log In</a>
+          <a href="{% url 'core:signup' %}"  class="hover:text-green-700">Sign Up</a>
+        </div>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+
+  <div>
+    <form action=""></form>
+  </div>
+
+</aside>
+
+
+<main class="flex-1 ml-56 pt-24">
+
+  <!-- content of home page like pictures, reviews etc -->
+  <div class="m-8">
+    <h1 class="text-3xl font-bold text-gray-600 mb-6">Review</h1>
+    <div class="grid grid-cols- gap-12 mt-6">
+      {% if review.menu.image %}
+      <div class="rounded shadow-2xl border-8 border-green-200">
+        <img class="m-0 p-0 w-60"
+        src="{{ review.menu.image.url }}" alt="{{ review.menu.menu }} image"/>
+         
+      {% endif %}
+        <div class="bg-white/50 h-56 w-full p-0">
+          <h2 class="text-xl p-5 underline underline-offset-6 text-gray-600 font-bold"
+          >{{ review.menu.menu }}</h2>
+          <p class="px-5 text-gray-600 text-xs">{{ review.created_at }}</p>
+          <p class="px-5 text-gray-600">{{ review.user.username }}</p>
+          <p class="px-5 text-gray-600">{{ review.restaurant.name }}</p>
+          <div class="text-gray-600 bg-teal-500 mx-14 text-center rounded py-1
+          mt-5 hover:bg-teal-500">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+
+</script>
+
+{% endblock content %}

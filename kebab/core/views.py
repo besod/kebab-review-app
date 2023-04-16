@@ -1,31 +1,56 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
 from .forms import SignupForm, LogInForm, ContactForm
 from .models import Contact, Review, Restaurant, Menu, CustomUser
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
 
 
 
-def home(request):
-    context = {}
-    context['user'] = CustomUser.objects.all()
-    return render(request, 'core/home.html', context)
+# def home(request):
+    # context = {}
+    # context['user'] = CustomUser.objects.all()
+    # return render(request, 'core/home.html', context)
+
 
 def top(request):
-    context ={
-        'reviews': Review.objects.all(),
-        'menu': Menu.objects.all(),
-        'restaurants': Restaurant.objects.all()
+    sort = request.GET.get('sort-by', '-created_at')
+    restaurant_name = request.GET.get('restaurant')
+    menu_name = request.GET.get('menu')
+    reviewer_name = request.GET.get('reviewer')
+
+    reviews = Review.objects.all()
+    # Get distinct restaurant names
+    restaurants = Review.objects.order_by().values_list('restaurant__name', flat=True).distinct()
+    # Get distinct menu names
+    menus = Review.objects.order_by().values_list('menu__menu', flat=True).distinct()
+    # Get distinct reviewer names
+    reviewers = Review.objects.order_by().values_list('user__username', flat=True).distinct()
+
+    if restaurant_name:
+        reviews = reviews.filter(restaurant__name=restaurant_name)
+    elif menu_name:
+        reviews = reviews.filter(menu__menu=menu_name)
+    elif reviewer_name:
+        reviews = reviews.filter(user__username=reviewer_name)
+        
+    if sort:
+            reviews = reviews.order_by(sort)
+
+    context = {
+        'reviews': reviews,
+        'restaurants': restaurants,
+        'menus': menus,
+        'reviewers': reviewers
     }
     return render(request, 'core/top.html', context)
 
 
 def detail(request, id):
+    review = get_object_or_404(Review, id=id)
     context = {
-        'review': Review.objects.get(id=id),
-        'menu': Menu.objects.get(id=id),
-        'restaurants': Restaurant.objects.get(id=id)
+        'review': review
     }
     return render(request, 'core/detail.html', context, status=200)
 

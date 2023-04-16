@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser
+from .models import CustomUser, Review
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from django.contrib.auth import authenticate
 
@@ -133,3 +133,9 @@ class ContactForm(forms.Form):
         label='Message',
         required=True
     )
+
+
+class ReviewForm(forms.Form):
+    class Meta:
+        model = Review
+        exclude = ['avg_rating', 'slug']

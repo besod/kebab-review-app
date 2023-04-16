@@ -3,24 +3,24 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, Review, Menu, Restaurant
 
 
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ['email', 'username', 'first_name', 'last_name', 'is_staff']
+    list_display = ['email', 'username']
 
-class ReviewAdmin(Review):
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
     model = Review
-    list_display = ['menu_id', 'restaurant_id', 'user_id']
+    list_display = ['user_id']
 
-class MenuAdmin(Menu):
+@admin.register(Menu)
+class MenuAdmin(admin.ModelAdmin):
     model = Menu
     list_display = ['menu', 'description']
 
-class RestaurantAdmin(Restaurant):
+@admin.register(Restaurant)
+class RestaurantAdmin(admin.ModelAdmin):
     model = Restaurant
     list_display = ['name']
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Menu)
-admin.site.register(Review)
-admin.site.register(Restaurant)

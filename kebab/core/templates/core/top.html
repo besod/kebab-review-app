@@ -5,8 +5,8 @@
 <header id="home" class="bg-yellow-300 py-3 px-16 fixed top-0 left-0 right-0 z-50">
   <nav class="flex justify-between items-center">
     <div class="flex justify-between items-center space-x-5">
-      <a href="http://127.0.0.1:8000/"><img src="{% static 'core/kebab.webp' %}" alt="Kebab"
-      class="w-24 rounded-3xl hover:animate-pulse"></a>
+      <a href="http://127.0.0.1:8000/core/"><img src="{% static 'core/kebab.webp' %}"
+        alt="Kebab" class="w-24 rounded-3xl hover:animate-pulse"></a>
       <p class="mt-2 text-3xl font-bold italic text-slate-900">
         Find best<span class="before:block before:absolute before:-inset-1 before:-skew-y-3
         before:bg-pink-500 relative inline-block mx-2">
@@ -16,8 +16,8 @@
     <div>
       <div class="font-bold text-black my-5">
         <ul class="flex text-3xl font-bold italic space-x-10">
-          <li><a href="{% url 'core:home' %}">Home</a></li>
-          <li><a href="{% url 'core:home' %}#about">About</a></li>
+          <li><a href="{% url 'core:top' %}">Home</a></li>
+          <li><a href="{% url 'core:top' %}#about">About</a></li>
           <li><a href="{% url 'core:contact' %}">Contact</a></li>
         </ul>
       </div>
@@ -34,10 +34,10 @@
             <ul class="flex flex-row space-x-4 text-lg text-gray-600">
               <li><p class="">You are not logged in : </p></li>
               <li><a href="{% url 'core:login' %}"
-                class="bg-white/90 p-1 rounded-md border-gray-400 border-2 hover:bg-green-200">
+                class="bg-white/50 p-1 rounded-md border-gray-400 border-2 hover:bg-green-200">
                 Log In</a></li>
               <li><a href="{% url 'core:signup' %}"
-                class="bg-white/90 p-1 rounded-md border-gray-400 border-2 hover:bg-green-200">
+                class="bg-white/50 p-1 rounded-md border-gray-400 border-2 hover:bg-green-200">
                 Sign Up</a></li>
             </ul>
           </li>
@@ -48,12 +48,59 @@
   </nav>
 </header>
 
-<aside class="w-48 fixed left-0 bottom-0 z-20 h-screen bg-yellow-200 p-3 mt-2">
-
-  <div>
-    <form action=""></form>
+<aside class="w-52 fixed left-0 bottom-0 z-20 h-screen bg-yellow-200 p-3 mt-2">
+  
+  <div class="pt-36">
+    <form action="{% url 'core:top' %}" method="GET">
+      {% csrf_token %}
+      <label for="sort-by" class="font-bold text-lg">Sort by:</label>
+      <select id="sort-by" name="sort-by" class="border-gray-400 border-2 rounded-sm">
+        <option value="">-- Choices --</option>
+        <option value="-created_at">Newest</option>
+        <option value="created_at">Oldest</option>
+        <option value="-avg_rating">Highest Rating</option>
+        <option value="avg_rating">Lowest Rating</option>
+        <option value="-menu__price">Highest Price</option>
+        <option value="menu__price">Lowest Price</option>
+      </select>
+      <button type="submit" class="bg-white/50 px-1 rounded-sm border-gray-400
+        border-2 hover:bg-green-200">Sort</button>
+    </form>
   </div>
 
+  <div class="grid grid-cols-2">
+    <form action="{% url 'core:top' %}" method="GET">
+      {% csrf_token %}
+      <h2 class="mt-5 font-bold text-lg">Filter by:</h2>
+      <label for="restaurant" class="font-semibold text-sm">Restaurant</label>
+      <select id="restaurant" name="restaurant" class="border-gray-400 border-2 rounded-sm">
+        <option value="">-- All --</option>
+        {% for r in restaurants %}
+        <option value="{{ r }}">{{ r }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <label for="menu" class="font-semibold text-sm">Menu</label>
+      <select id="menu" name="menu" class="border-gray-400 border-2 rounded-sm">
+        <option value="">-- All --</option>
+        {% for m in menus %}
+        <option value="{{ m }}">{{ m }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <label for="reviewer" class="font-semibold text-sm">Reviewer</label>
+      <select id="reviewer" name="reviewer" class="border-gray-400 border-2 rounded-sm">
+        <option value="">-- All --</option>
+        {% for r in reviewers %}
+        <option value="{{ r }}">{{ r }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <button type="submit" class="bg-white/50 px-1 rounded-sm border-gray-400
+        border-2 hover:bg-green-200 col-start-2 mt-2">Filter</button>
+    </form>
+  </div>
+  
 </aside>
 
 
@@ -61,7 +108,7 @@
 
   <!-- content of home page like pictures, reviews etc -->
   <div class="m-10">
-    <h1 class="text-3xl font-bold text-gray-600 mb-6">Recent Review</h1>
+    <h1 class="text-3xl font-bold text-gray-600 mb-6">Reviews</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {% for review in reviews %}
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -76,7 +123,7 @@
         <div class="p-4">
           <h2 class="text-lg font-bold text-gray-800">Menu: {{ review.menu.menu }}</h2>
           <h2 class="text-lg font-bold text-pink-600">Price: {{ review.menu.price }} kr</h2>
-          <h2 class="text-lg font-bold text-pink-600">Rating: {{ review.total_rating }}</h2>
+          <h2 class="text-lg font-bold text-pink-600">Rating: {{ review.avg_rating }}</h2>
           <p class="text-gray-500 text-sm mt-2">{{ review.created_at|date:"Y-m-d" }}</p>
           <p class="text-gray-500 text-sm">Reviewer: {{ review.user.username }}</p>
           <p class="text-gray-500 text-sm">Restaurant: {{ review.restaurant.name }}</p>

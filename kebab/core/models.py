@@ -103,10 +103,14 @@ class Review(models.Model):
     taste_rating = models.IntegerField(choices=REVIEW_CHOICES, null=False)
     service_rating = models.IntegerField(choices=REVIEW_CHOICES, null=False)
     value_rating = models.IntegerField(choices=REVIEW_CHOICES, null=False)
-    total_rating = models.IntegerField()
+    avg_rating = models.FloatField(null=True, blank=True)
     slug = models.SlugField(null=False, unique=True)
     like_count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.avg_rating = round((self.taste_rating + self.service_rating + self.value_rating) / 3, 1)
+        super(Review, self).save(*args, **kwargs)
 
 
 class Contact(models.Model):

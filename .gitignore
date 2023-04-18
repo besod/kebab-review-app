@@ -1,0 +1,5 @@
+# ignore venv files
+venv/
+
+# ignore database
+# kebab/db.sqlite3

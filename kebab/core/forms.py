@@ -132,13 +132,14 @@ class ContactForm(forms.Form):
     )
 
 
-# class ImageCreateForm(forms.ModelForm):
-#     class Meta:
-#         model = Menu
-#         fields = ['menu', 'image']
-
-
-class ReviewForm(forms.Form):
+class UploadForm(forms.ModelForm):
     class Meta:
         model = Review
-        exclude = ['avg_rating']
+        fields = ['image', 'review',
+                  'taste_rating', 'value_rating', 'service_rating']
+
+
+# class ReviewForm(forms.Form):
+#     class Meta:
+#         model = Review
+#         exclude = ['avg_rating']

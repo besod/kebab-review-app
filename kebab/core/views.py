@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
-from .forms import SignupForm, LogInForm, ContactForm, ReviewForm
+from .forms import SignupForm, LogInForm, ContactForm, UploadForm
 from .models import Contact, Review
 from django.contrib.auth.decorators import login_required
 
@@ -98,16 +98,16 @@ def log_in(request):
 def upload_image(request):
     if request.method == 'POST':
         # request.POST, request.FILES
-        form = ReviewForm(data=request.POST, files=request.FILES)
+        form = UploadForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             new_item = form.save(commit=False)
             new_item.user = request.user
             new_item.save()
             # messages.success(request, 'Image added successfully')
             form.save_m2m()  # Save many-to-many relationships
-            return redirect('/core/')
+            return redirect('core:top')
     else:
-        form = ReviewForm(data=request.GET)
+        form = UploadForm(data=request.GET)
 
     return render(request, 'account/upload.html', {'form': form})
 

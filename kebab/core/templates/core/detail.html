@@ -77,7 +77,7 @@
             Reviewed at: {{ review.created_at|date:"Y-m-d" }}</li>
           <li>Restaurant: {{ review.restaurant.name }}</li>
           <li>Reviewer: {{ review.user.username }}</li>
-          <li>Review: </li>
+          <li>Review: {{ review.review }}</li>
           <li class="text-gray-600 text-base font-normal mt-1">Like count: {{ review.like_count }}</li>
         </ul>
       </div>

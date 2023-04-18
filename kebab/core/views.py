@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
-from .forms import SignupForm, LogInForm, ContactForm
-from .models import Contact, Review, Restaurant, Menu, CustomUser
+from .forms import SignupForm, LogInForm, ContactForm, ReviewForm
+from .models import Contact, Review
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
 
 
 
@@ -21,6 +20,7 @@ def top(request):
     reviewer_name = request.GET.get('reviewer')
 
     reviews = Review.objects.all()
+    best = Review.objects.order_by('menu__price', '-avg_rating', '-like_count', '-created_at').first()
     # Get distinct restaurant names
     restaurants = Review.objects.order_by().values_list('restaurant__name', flat=True).distinct()
     # Get distinct menu names
@@ -40,6 +40,7 @@ def top(request):
 
     context = {
         'reviews': reviews,
+        'best': best,
         'restaurants': restaurants,
         'menus': menus,
         'reviewers': reviewers
@@ -75,16 +76,16 @@ def userpage(request):
 def log_in(request):
     error = False
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('/core/')
     if request.method == "POST":
         form = LogInForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
-            user = authenticate(email=email, password=password)
+            user = authenticate(request, email=email, password=password)
             if user:
                 login(request, user)
-                return redirect('home')
+                return redirect('/core/')
             else:
                 error = True
     else:
@@ -93,9 +94,27 @@ def log_in(request):
     return render(request, 'account/login.html', {'form': form, 'error': error})
 
 
+@login_required
+def upload_image(request):
+    if request.method == 'POST':
+        # request.POST, request.FILES
+        form = ReviewForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            new_item = form.save(commit=False)
+            new_item.user = request.user
+            new_item.save()
+            # messages.success(request, 'Image added successfully')
+            form.save_m2m()  # Save many-to-many relationships
+            return redirect('/core/')
+    else:
+        form = ReviewForm(data=request.GET)
+
+    return render(request, 'account/upload.html', {'form': form})
+
+
 def log_out(request):
     logout(request)
-    return redirect(reverse('account:login'))
+    return redirect(reverse('core:top'))
 
 
 def contact(request):
@@ -108,7 +127,7 @@ def contact(request):
                 email = form.cleaned_data['email'],
                 message = form.cleaned_data['message']
             )
-        return redirect('core:home')
+        return redirect('/core/')
     else:
         form = ContactForm()
         context = {

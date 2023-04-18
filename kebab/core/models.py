@@ -74,8 +74,6 @@ class Restaurant(models.Model):
 class Menu(models.Model):
     menu = models.CharField(max_length=100, null=False)
     price = models.IntegerField(null=False)
-    description = models.TextField(null=False)
-    image = models.ImageField(upload_to='images/', null=False)
     restaurants = models.ManyToManyField(Restaurant)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -100,14 +98,20 @@ class Review(models.Model):
     restaurant = models.ForeignKey(
         Restaurant, on_delete=models.CASCADE, related_name='restaurants_for_review'
     )
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    review = models.TextField(default="", null=False)
     taste_rating = models.IntegerField(choices=REVIEW_CHOICES, null=False)
     service_rating = models.IntegerField(choices=REVIEW_CHOICES, null=False)
     value_rating = models.IntegerField(choices=REVIEW_CHOICES, null=False)
     avg_rating = models.FloatField(null=True, blank=True)
-    slug = models.SlugField(null=False, unique=True)
     like_count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+    # slug = models.SlugField(null=False, unique=True)
 
+    # class Meta:
+    #     indexes = [models.Index(fields=['-created_at']),]
+    #     ordering = ['-created_at']
+    
     def save(self, *args, **kwargs):
         self.avg_rating = round((self.taste_rating + self.service_rating + self.value_rating) / 3, 1)
         super(Review, self).save(*args, **kwargs)

@@ -1,11 +1,8 @@
 from django import forms
-from .models import CustomUser, Review
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
+from .models import CustomUser, Review, Menu
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
-
-class HomeForm(forms.Form):
-    pass
 
 
 class SignupForm(UserCreationForm):
@@ -135,7 +132,13 @@ class ContactForm(forms.Form):
     )
 
 
+# class ImageCreateForm(forms.ModelForm):
+#     class Meta:
+#         model = Menu
+#         fields = ['menu', 'image']
+
+
 class ReviewForm(forms.Form):
     class Meta:
         model = Review
-        exclude = ['avg_rating', 'slug']
+        exclude = ['avg_rating']

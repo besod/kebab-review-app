@@ -16,7 +16,7 @@ class ReviewAdmin(admin.ModelAdmin):
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     model = Menu
-    list_display = ['menu', 'description']
+    list_display = ['menu']
 
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin):

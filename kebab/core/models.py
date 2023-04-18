@@ -64,8 +64,8 @@ class CustomUser(AbstractUser):
 class Restaurant(models.Model):
     name = models.CharField(max_length=100, null=False)
     address = models.CharField(max_length=200, null=False)
-    tel = models.CharField(max_length=20)
-    website = models.URLField()
+    tel = models.CharField(max_length=20, null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -82,13 +82,6 @@ class Menu(models.Model):
 
 
 class Review(models.Model):
-    REVIEW_CHOICES = (
-        (1, '1 - Bad'),
-        (2, '2 - Fair'),
-        (3, '3 - Average'),
-        (4, '4 - Good'),
-        (5, '5 - Excellent'),
-    )
     user = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, related_name='reviews_by_user'
     )
@@ -108,9 +101,9 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     # slug = models.SlugField(null=False, unique=True)
 
-    # class Meta:
-    #     indexes = [models.Index(fields=['-created_at']),]
-    #     ordering = ['-created_at']
+    class Meta:
+        indexes = [models.Index(fields=['-created_at']),]
+        ordering = ['-created_at']
     
     def save(self, *args, **kwargs):
         self.avg_rating = round((self.taste_rating + self.service_rating + self.value_rating) / 3, 1)
@@ -127,6 +120,7 @@ class Contact(models.Model):
         return self.name
     
 
+
 # Use Django's default function to create user
 # class CustomUser(AbstractUser):
 #     email = models.EmailField(blank=False)
@@ -139,23 +133,3 @@ class Contact(models.Model):
 
 #     def __str__(self):
 #         return self.username
-
-
-# class FavoriteRestaurant(models.Model):
-#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='favorite_restaurants')
-#     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='favorited_by')
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-# class FavoriteReviewer(models.Model):
-#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='favorite_reviewers')
-#     reviewer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='favorited_by_reviewers')
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-# class RestaurantMenu(models.Model):
-#     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='restaurant_menus')
-#     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='menu_restaurants')
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-# Define custom manager that extends BaseUserManager.We make email field unique to be
-# able to use it as the unique identifier.
-

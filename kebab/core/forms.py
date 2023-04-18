@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Review, Menu
+from .models import CustomUser, Review, Menu, Restaurant
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
@@ -85,20 +85,6 @@ class LogInForm(forms.Form):
             'class': 'form-checkbox text-blue-500 mr-2',
             'id': 'remember-me'
         }))
-    # def clean(self, *args, **kwargs):
-    #     email = self.cleaned_data.get('email')
-    #     password = self.cleaned_data.get('password')
-
-    #     if email and password:
-    #         user = authenticate(email=email, password=password)
-
-    #         if not user:
-    #             raise forms.ValidationError('user does not exist')
-
-    #         if not user.check_password(password):
-    #             raise forms.ValidationError('incorrect password')
-
-    #     return super(LogInForm, self).clean(*args, **kwargs)
 
 
 class ContactForm(forms.Form):
@@ -133,13 +119,103 @@ class ContactForm(forms.Form):
 
 
 class UploadForm(forms.ModelForm):
+    taste_rating = forms.IntegerField(min_value=1, max_value=10)
+    service_rating = forms.IntegerField(min_value=1, max_value=10)
+    value_rating = forms.IntegerField(min_value=1, max_value=10)
+
+    restaurant_name = forms.CharField(
+        max_length=100,
+        widget = forms.TextInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Restaurant',
+                'style': 'border: 1px solid #ccc'
+        })
+    )
+    restaurant_address = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Address',
+                'style': 'border: 1px solid #ccc'
+        })
+    )
+    restaurant_tel = forms.CharField(
+        max_length=20, required=False,
+        widget=forms.TextInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Telephone',
+                'style': 'border: 1px solid #ccc'
+        })
+    )
+    restaurant_website = forms.URLField(
+        required=False,
+        widget=forms.URLInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Website',
+                'style': 'border: 1px solid #ccc'
+        })
+    )
+
+    menu_name = forms.CharField(
+        max_length=100,
+        widget = forms.TextInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Menu',
+                'style': 'border: 1px solid #ccc'
+        })
+    )
+    menu_price = forms.IntegerField(
+        widget=forms.NumberInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'style': 'border: 1px solid #ccc'
+        })
+    )
+
     class Meta:
         model = Review
-        fields = ['image', 'review',
-                  'taste_rating', 'value_rating', 'service_rating']
+        exclude = ['user', 'menu', 'restaurant', 'like_count', 'avg_rating']
+
+    def __init__(self, user=None, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        
+        try:
+            restaurant = Restaurant.objects.get(
+                name=self.cleaned_data['restaurant_name'],
+                address=self.cleaned_data['restaurant_address']
+            )
+        except Restaurant.DoesNotExist:
+            restaurant = Restaurant.objects.create(
+                name = self.cleaned_data['restaurant_name'],
+                address = self.cleaned_data['restaurant_address'],
+                tel = self.cleaned_data.get('restaurant_tel', ''),
+                website = self.cleaned_data.get('restaurant_website', '')
+            )
+
+        try:
+            menu = Menu.objects.get(
+                menu=self.cleaned_data['menu_name'],
+                price=self.cleaned_data['menu_price']
+            )
+        except Menu.DoesNotExist:
+            menu = Menu.objects.create(
+                menu = self.cleaned_data['menu_name'],
+                price = self.cleaned_data['menu_price']
+            )
+            menu.restaurants.add(restaurant)
+            menu.save()
+
+        # Create review
+        review = super().save(commit=False)
+        if self.user:
+            review.user = self.user
+        review.restaurant = restaurant
+        review.menu = menu
+        
+        if commit:
+            review.save()
+        return review
 
 
-# class ReviewForm(forms.Form):
-#     class Meta:
-#         model = Review
-#         exclude = ['avg_rating']

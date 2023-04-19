@@ -3,3 +3,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# ignore database
+kebab/db.sqlite3

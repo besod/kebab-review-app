@@ -1,38 +1,52 @@
-{% extends 'core/base.html' %} {% block content %}
+{% extends 'core/base.html' %} {% block content %} {% load static %}
 
-<div class="flex flex-col items-center justify-center h-screen my-12">
-  <section style="border: 1px solid gray; border-radius: 0.5rem;"
-  class="py-6 px-16 bg-yellow-100">
-    <div class="bg-green-500 w-full mb-2 py-1 rounded-sm">
-      <h2 class="text-3xl font-bold my-2 text-center text-white">
-        Contact
+<main class="container mx-auto px-4 py-16">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
+    <div
+      class="bg-amber-600 shadow-lg p-6 md:col-span-2 rounded-tl-lg rounded-bl-lg"
+    >
+      <h2 class="text-5xl font-bold mb-4 pt-4">
+        Tell us what you like (and what not)
       </h2>
-    </div>
-    <form action="{% url 'core:contact' %}" method="POST" class="w-full max-w-md">
-      <div class="mb-4 block text-dark-700 font-bold text-lg">
+      <form action="{% url 'core:contact' %}" method="POST">
         {% csrf_token %}
-        {% for field in form %}
-        <dt>
-          <label class="font-bold text-lg" 
-          for="{{ field.id_for_label }}">{{ field.label }}:</label>
-        </dt>
-        <dd>{{ field }}</dd>
-          {% if field.errors %}
-          <p class="text-gray-600">{{ field.errors }}</p>
+        <div class="mb-4">
+          <label for="id_name" class="font-bold text-lg">Name:</label>
+          {{ form.name }} {% if form.name.errors %}
+          <p class="text-red-500">{{ form.name.errors }}</p>
           {% endif %}
-        {% endfor %}
-      </div>
-      <div class="text-center">
-        <button type="submit"
-        class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mt-4">
-        Submit</button>
-        <div class="mt-1">
-            <a href="{% url 'core:top' %}" 
-            class="underline text-blue-500 hover:text-blue-800">Back to Top page</a>
         </div>
-      </div>
-    </form>
-  </section>
-</div>
+        <div class="mb-4">
+          <label for="id_email" class="font-bold text-lg">Email:</label>
+          {{ form.email }} {% if form.email.errors %}
+          <p class="text-red-500">{{ form.email.errors }}</p>
+          {% endif %}
+        </div>
+        <div class="mb-6">
+          <label for="id_message" class="font-bold text-lg">Message:</label>
+          {{ form.message }} {% if form.message.errors %}
+          <p class="text-red-500">{{ form.message.errors }}</p>
+          {% endif %}
+        </div>
+        <button
+          type="submit"
+          class="bg-amber-900 hover:bg-amber-600 text-white font-bold text-3xl py-2 px-4 rounded"
+        >
+          Send
+        </button>
+      </form>
+    </div>
+    <div
+      class="shadow-lg p-0 md:col-span-1 h-full bg-amber-500 rounded-tr-lg rounded-br-lg"
+    >
+      <img
+        src="{% static 'core/eating.jpg' %}"
+        alt="Image"
+        class="float-right bg-amber-500 opacity-60 h-full"
+        style="max-width: 100%"
+      />
+    </div>
+  </div>
+</main>
 
 {% endblock %}

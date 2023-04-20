@@ -2,15 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
 from .forms import SignupForm, LogInForm, ContactForm, UploadForm
-from .models import Contact, Review
+from .models import Contact, Review, CustomUser
 from django.contrib.auth.decorators import login_required
 
 
-
 # def home(request):
-    # context = {}
-    # context['user'] = CustomUser.objects.all()
-    # return render(request, 'core/home.html', context)
+# context = {}
+# context['user'] = CustomUser.objects.all()
+# return render(request, 'core/home.html', context)
 
 
 def top(request):
@@ -20,13 +19,17 @@ def top(request):
     reviewer_name = request.GET.get('reviewer')
 
     reviews = Review.objects.all()
-    best = Review.objects.order_by('menu__price', '-avg_rating', '-like_count', '-created_at').first()
+    best = Review.objects.order_by(
+        'menu__price', '-avg_rating', '-like_count', '-created_at').first()
     # Get distinct restaurant names
-    restaurants = Review.objects.order_by().values_list('restaurant__name', flat=True).distinct()
+    restaurants = Review.objects.order_by().values_list(
+        'restaurant__name', flat=True).distinct()
     # Get distinct menu names
-    menus = Review.objects.order_by().values_list('menu__menu', flat=True).distinct()
+    menus = Review.objects.order_by().values_list(
+        'menu__menu', flat=True).distinct()
     # Get distinct reviewer names
-    reviewers = Review.objects.order_by().values_list('user__username', flat=True).distinct()
+    reviewers = Review.objects.order_by().values_list(
+        'user__username', flat=True).distinct()
 
     if restaurant_name:
         reviews = reviews.filter(restaurant__name=restaurant_name)
@@ -34,9 +37,9 @@ def top(request):
         reviews = reviews.filter(menu__menu=menu_name)
     elif reviewer_name:
         reviews = reviews.filter(user__username=reviewer_name)
-        
+
     if sort:
-            reviews = reviews.order_by(sort)
+        reviews = reviews.order_by(sort)
 
     context = {
         'reviews': reviews,
@@ -66,11 +69,6 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'account/signup.html', {'form': form})
-
-
-@login_required(login_url='login')
-def userpage(request):
-    pass
 
 
 def log_in(request):
@@ -123,9 +121,9 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             Contact.objects.create(
-                name = form.cleaned_data['name'],
-                email = form.cleaned_data['email'],
-                message = form.cleaned_data['message']
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                message=form.cleaned_data['message']
             )
         return redirect('/core/')
     else:
@@ -134,6 +132,16 @@ def contact(request):
             'form': form
         }
         return render(request, 'core/contact.html', context)
+
+
+def user_profile(request, username):
+    context = {}
+    user = get_object_or_404(CustomUser, username=username)
+    context = {
+        'user': user
+    }
+    redirect
+    return render(request, 'account/profile.html', context=context)
 
 
 # When inplement create_review function, use this maybe

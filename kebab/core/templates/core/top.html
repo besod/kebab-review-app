@@ -23,13 +23,14 @@
       </p>
     </div>
     <div class="flex-grow lg:flex lg:items-center lg:w-auto">
+      
       {% if user.is_authenticated %}
       <!-- fetch user from database -->
 
       <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
         <li>
           <p class="text-lg font-bold mr-4 text-white">
-            Hi {{ user.username }}!
+            Hi {{ user.username }}! <a href="{% url 'core:profile' %}">dfdfdfdfd</a>
           </p>
         </li>
         <li>
@@ -43,18 +44,25 @@
       {% else %}
       <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
         <li>
-          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-white mr-2 font-bold">Log
+          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 font-bold">Log
             In</a>
         </li>
         <li>
           <span class="text-gray-500 font-bold">|</span>
         </li>
         <li>
-          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-white ml-2">Sign
+          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-black ml-2">Sign
             Up</a>
         </li>
+        {% endif %}
+        <li>
+          <span class="text-gray-500 font-bold">|</span>
+        </li>
+        <li><a href="{% url 'core:contact' %}"
+            class="bg-amber-500 rounded-full px-4 py-2 mr-4 text-black font-bold">contact</a></li>
       </ul>
-      {% endif %}
+    
+      
     </div>
   </nav>
 </header>
@@ -98,9 +106,6 @@
 </aside>
 
 
-
-
-
 <main class="flex-1 ml-56 pt-28">
   <div class="flex-1 ml-10 mx-auto w-6/6 pt-5">
     <section class="flex flex-row items-center justify-between py-10 ">
@@ -124,7 +129,7 @@
               {% endif %}
               <div class="absolute bottom-0 left-0 w-full text-white p-4 bg-black bg-opacity-50">
                 <h1 class="text-2xl font-bold">{{ best.menu.menu }}</h1>
-                <p class="text-sm">Uploaded by: {{ best.user.username }} {{ best.created_at|date:"Y-m-d" }}</p>
+                <p class="text-lg"> By: {{ best.user.username }} </p> <p class="text-sm"> {{ best.created_at|date:"Y-m-d" }}</p>
                 <ul class="text-sm font-bold mt-4">
                   <li>Restaurant: {{ best.restaurant.name }}</li>
                   <li>Price: SEK {{ best.menu.price }}</li>
@@ -146,98 +151,94 @@
      
     </section>
   </div>
-  
-  
 
-    
-    <!-- bottom section  -->
-    <div class="mx-10 mt-28">
-      <h1 class="text-4xl italic font-bold mb-4">
-        <span
-          class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
-          <span class="relative text-white p-1">Reviews</span></span>
-      </h1>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {% for review in reviews %}
-        <div class="bg-yellow-50/90 rounded-lg shadow-lg overflow-hidden">
-          {% if review.image %}
-          <div class="relative overflow-hidden" style="padding-bottom: 56.25%">
-            <div class="absolute inset-0">
-              <img class="object-cover h-full w-full" src="{{ review.image.url }}" alt="{{ review.menu.menu }} image" />
-            </div>
-          </div>
-          {% endif %}
-          <div class="p-4">
-            <h2 class="text-lg font-bold text-gray-800">
-              Menu: {{ review.menu.menu }}
-            </h2>
-            <h2 class="text-lg font-bold text-pink-600">
-              Price: {{ review.menu.price }} kr
-            </h2>
-            <h2 class="text-lg font-bold text-pink-600">
-              Rating: {{ review.avg_rating }}
-            </h2>
-            <p class="text-gray-500 text-sm mt-2">
-              {{ review.created_at|date:"Y-m-d" }}
-            </p>
-            <p class="text-gray-500 text-sm">
-              Reviewer: {{ review.user.username }}
-            </p>
-            <p class="text-gray-500 text-sm">
-              Restaurant: {{ review.restaurant.name }}
-            </p>
-            <div class="text-gray-600 bg-green-300/80 mx-20 text-center rounded py-1 mt-5 hover:bg-yellow-300">
-              <a href="{% url 'core:detail' id=review.id %}">Detail</a>
-            </div>
+  <div class="mx-10 mt-28">
+    <h1 class="text-4xl italic font-bold mb-4">
+      <span
+        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
+        <span class="relative text-white p-1">Reviews</span></span>
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for review in reviews %}
+      <div class="bg-yellow-50/90 rounded-lg shadow-lg overflow-hidden">
+        {% if review.image %}
+        <div class="relative overflow-hidden" style="padding-bottom: 56.25%">
+          <div class="absolute inset-0">
+            <img class="object-cover h-full w-full" src="{{ review.image.url }}" alt="{{ review.menu.menu }} image" />
           </div>
         </div>
-        {% endfor %}
+        {% endif %}
+        <div class="p-4">
+          <h2 class="text-lg font-bold text-gray-800">
+            Menu: {{ review.menu.menu }}
+          </h2>
+          <h2 class="text-lg font-bold text-pink-600">
+            Price: {{ review.menu.price }} kr
+          </h2>
+          <h2 class="text-lg font-bold text-pink-600">
+            Rating: {{ review.avg_rating }}
+          </h2>
+          <p class="text-gray-500 text-sm mt-2">
+            {{ review.created_at|date:"Y-m-d" }}
+          </p>
+          <p class="text-gray-500 text-sm">
+            Reviewer: {{ review.user.username }}
+          </p>
+          <p class="text-gray-500 text-sm">
+            Restaurant: {{ review.restaurant.name }}
+          </p>
+          <div class="text-gray-600 bg-green-300/80 mx-20 text-center rounded py-1 mt-5 hover:bg-yellow-300">
+            <a href="{% url 'core:detail' id=review.id %}">Detail</a>
+          </div>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    </section>
-    <div class="mt-28">
-      <h1 class="text-4xl italic font-bold mb-4 mx-10">
-        <span
-          class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
-          <span class="relative text-white p-1">About</span></span>
-      </h1>
-      <div id="about" class="p-10 bg-yellow-50/90 rounded-lg shadow-lg mx-10 mb-5">
-        <p class="text-lg mb-2 font-medium">
-          This website is a review website focused on kebabs. <br />
-          This mainly provide you with menu prices, reviews, restaurant
-          information, <br />
-          and ratings related to kebabs. Users who create an account can leave
-          reviews as well. <br />
-          Here's a brief overview of each of the website's features: <br />
-        </p>
-        <ul>
-          <li>
-            <p class="font-bold underline mt-2 mb-1">● Menu Prices:</p>
-            We will provide you with up-to-date menu prices for various kebab
-            dishes from different restaurants.
-          </li>
-          <li>
-            <p class="font-bold underline mt-2 mb-1">● Reviews:</p>
-            You can leave reviews of their experiences at kebab restaurants,
-            including comments on the food, service, and overall atmosphere.
-          </li>
-          <li>
-            <p class="font-bold underline mt-2 mb-1">● Restaurant Information:</p>
-            We offer you detailed information about kebab restaurants.
-          </li>
-          <li>
-            <p class="font-bold underline mt-2 mb-1">● Ratings:</p>
-            You can rate restaurants based on their overall experience, including
-            the quality of the food, service, and atmosphere.
-          </li>
-          <li>
-            <p class="font-bold underline mt-2 mb-1">● User Accounts:</p>
-            You can create an account to leave reviews and save their favorite
-            restaurants.
-          </li>
-        </ul>
-      </div>
+  </div>
+  </section>
+  <div class="mt-28">
+    <h1 class="text-4xl italic font-bold mb-4 mx-10">
+      <span
+        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
+        <span class="relative text-white p-1">About</span></span>
+    </h1>
+    <div id="about" class="p-10 bg-yellow-50/90 rounded-lg shadow-lg mx-10 mb-5">
+      <p class="text-lg mb-2 font-medium">
+        This website is a review website focused on kebabs. <br />
+        This mainly provide you with menu prices, reviews, restaurant
+        information, <br />
+        and ratings related to kebabs. Users who create an account can leave
+        reviews as well. <br />
+        Here's a brief overview of each of the website's features: <br />
+      </p>
+      <ul>
+        <li>
+          <p class="font-bold underline mt-2 mb-1">● Menu Prices:</p>
+          We will provide you with up-to-date menu prices for various kebab
+          dishes from different restaurants.
+        </li>
+        <li>
+          <p class="font-bold underline mt-2 mb-1">● Reviews:</p>
+          You can leave reviews of their experiences at kebab restaurants,
+          including comments on the food, service, and overall atmosphere.
+        </li>
+        <li>
+          <p class="font-bold underline mt-2 mb-1">● Restaurant Information:</p>
+          We offer you detailed information about kebab restaurants.
+        </li>
+        <li>
+          <p class="font-bold underline mt-2 mb-1">● Ratings:</p>
+          You can rate restaurants based on their overall experience, including
+          the quality of the food, service, and atmosphere.
+        </li>
+        <li>
+          <p class="font-bold underline mt-2 mb-1">● User Accounts:</p>
+          You can create an account to leave reviews and save their favorite
+          restaurants.
+        </li>
+      </ul>
     </div>
+  </div>
 </main>
 
 {% endblock content %}

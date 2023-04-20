@@ -25,7 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(
         template_name='top.html'), name='top'),  # Add this
-    path('core/', include(('core.urls', 'core'), namespace='core'))  # Add this
+    path('core/', include(('core.urls', 'core'), namespace='core')),  # Add this
+
 ]
 # Configurations to import.Make sure that the static files run.
 # pip install whitenosie to help with.

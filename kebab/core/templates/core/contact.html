@@ -1,39 +1,46 @@
 {% extends 'core/base.html' %} {% block content %} {% load static %}
 
-<main class="container mx-auto px-4 py-16">
+<section class="container mx-auto px-4 py-16">
   <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
     <div
       class="bg-amber-600 shadow-lg p-6 md:col-span-2 rounded-tl-lg rounded-bl-lg"
     >
-      <h2 class="text-5xl font-bold mb-4 pt-4">
+      <h2 class="text-2xl md:text-2xl font-bold mb-4 pt-4">
         Tell us what you like (and what not)
       </h2>
       <form action="{% url 'core:contact' %}" method="POST">
         {% csrf_token %}
         <div class="mb-4">
-          <label for="id_name" class="font-bold text-lg">Name:</label>
+          <label for="id_name" class="font-bold text-lg md:text-xl"
+            >Name:</label
+          >
           {{ form.name }} {% if form.name.errors %}
           <p class="text-red-500">{{ form.name.errors }}</p>
           {% endif %}
         </div>
         <div class="mb-4">
-          <label for="id_email" class="font-bold text-lg">Email:</label>
+          <label for="id_email" class="font-bold text-lg md:text-xl"
+            >Email:</label
+          >
           {{ form.email }} {% if form.email.errors %}
           <p class="text-red-500">{{ form.email.errors }}</p>
           {% endif %}
         </div>
         <div class="mb-6">
-          <label for="id_message" class="font-bold text-lg">Message:</label>
+          <label for="id_message" class="font-bold text-lg md:text-xl"
+            >Message:</label
+          >
           {{ form.message }} {% if form.message.errors %}
           <p class="text-red-500">{{ form.message.errors }}</p>
           {% endif %}
         </div>
         <button
           type="submit"
-          class="bg-amber-900 hover:bg-amber-600 text-white font-bold text-3xl py-2 px-4 rounded"
+          class="bg-amber-900 hover:bg-amber-600 text-white font-bold text-3xl md:text-4xl py-2 px-4 rounded-xl"
         >
           Send
         </button>
+        <div class="mt-1"></div>
       </form>
     </div>
     <div
@@ -47,6 +54,6 @@
       />
     </div>
   </div>
-</main>
+</section>
 
 {% endblock %}

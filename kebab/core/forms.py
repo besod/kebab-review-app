@@ -109,7 +109,8 @@ class ContactForm(forms.Form):
         widget=forms.Textarea(attrs={
             'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
             'placeholder': 'Message',
-            'style': 'border: 1px solid #ccc'
+            'style': 'border: 1px solid #ccc',
+            'rows': 4  # Change this value to adjust the height
         }),
         label='Message',
         required=True

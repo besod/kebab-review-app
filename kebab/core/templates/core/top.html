@@ -23,6 +23,7 @@
       </p>
     </div>
     <div class="flex-grow lg:flex lg:items-center lg:w-auto">
+      
       {% if user.is_authenticated %}
       <!-- fetch user from database -->
 
@@ -43,18 +44,25 @@
       {% else %}
       <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
         <li>
-          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-white mr-2 font-bold">Log
+          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 font-bold">Log
             In</a>
         </li>
         <li>
           <span class="text-gray-500 font-bold">|</span>
         </li>
         <li>
-          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-white ml-2">Sign
+          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-black ml-2">Sign
             Up</a>
         </li>
+        {% endif %}
+        <li>
+          <span class="text-gray-500 font-bold">|</span>
+        </li>
+        <li><a href="{% url 'core:contact' %}"
+            class="bg-amber-500 rounded-full px-4 py-2 mr-4 text-black font-bold">contact</a></li>
       </ul>
-      {% endif %}
+    
+      
     </div>
   </nav>
 </header>
@@ -121,7 +129,7 @@
               {% endif %}
               <div class="absolute bottom-0 left-0 w-full text-white p-4 bg-black bg-opacity-50">
                 <h1 class="text-2xl font-bold">{{ best.menu.menu }}</h1>
-                <p class="text-sm">Uploaded by: {{ best.user.username }} {{ best.created_at|date:"Y-m-d" }}</p>
+                <p class="text-lg"> By: {{ best.user.username }} </p> <p class="text-sm"> {{ best.created_at|date:"Y-m-d" }}</p>
                 <ul class="text-sm font-bold mt-4">
                   <li>Restaurant: {{ best.restaurant.name }}</li>
                   <li>Price: SEK {{ best.menu.price }}</li>
@@ -235,10 +243,10 @@
         </ul>
       </div>
     </div>
+    n>
     <footer>
 
-      <a href="{% url 'core:contact' %}"
-      class="bg-amber-500 rounded-full px-4 py-2 mr-4 text-black font-bold">Contact</a>
+    
     </footer>
 </main>
 

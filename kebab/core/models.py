@@ -109,6 +109,8 @@ class Review(models.Model):
         self.avg_rating = round((self.taste_rating + self.service_rating + self.value_rating) / 3, 1)
         super(Review, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return f'{self.user} reviewed on {self.menu} and {self.restaurant}'
 
 class Contact(models.Model):
     name = models.CharField(max_length=100, null=False)
@@ -118,7 +120,21 @@ class Contact(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class Comment(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='comments')
+    name = models.CharField(max_length=80,  null=False)
+    comment = models.TextField(null=False)
+    avg_rating = models.IntegerField( null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    class Meta():
+        ordering = ['-created_at']
+        indexes = [models.Index(fields=['-created_at'])]
     
+    def __str__(self):
+        return f'{self.name} commented on {self.review}'
+
 
 
 # Use Django's default function to create user

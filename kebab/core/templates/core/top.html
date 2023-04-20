@@ -1,5 +1,10 @@
 {% extends 'core/base.html' %} {% block content %} {% load static %}
+<head>
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Vf8mRbSJFJZFK6/CbVhPmibq+3mJVjIaDtfkwO5OAM3qee0LpYCrKAjO49qq08Q5J5R5l5Q2f+LPcHpfLd8Bw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+</head>
 <header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
   <nav class="flex items-center w-full">
     <div class="flex justify-between items-center space-x-5">
@@ -29,10 +34,10 @@
         </li>
         <li>
           <a href="{% url 'core:upload' %}"
-            class="bg-amber-500 rounded-full px-4 py-2 mr-4 text-white font-bold">Review</a>
+            class="bg-amber-500 rounded-full px-4 py-2 mr-4 text-black font-bold">Review</a>
         </li>
         <li>
-          <a href="{% url 'core:logout' %}" class="bg-black font-bold rounded-full px-4 py-2 text-white">Log Out</a>
+          <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-black">Log Out</a>
         </li>
       </ul>
       {% else %}
@@ -54,195 +59,185 @@
   </nav>
 </header>
 
-<aside class="w-52 fixed left-0 bottom-0 z-20 h-screen bg-amber-100 p-3 mt-2">
+<aside class="w-62 fixed left-0 bottom-0 z-20 h-screen bg-amber-100 p-3 mt-2">
   <div class="pt-36">
     <form action="{% url 'core:top' %}" method="GET">
       {% csrf_token %}
-      <label for="sort-by" class="font-bold text-lg">Sort by:</label>
-      <select id="sort-by" name="sort-by" class="border-gray-400 border-2 rounded-sm">
-        <option value="">-- Choices --</option>
-        <option value="-created_at">Newest</option>
-        <option value="created_at">Oldest</option>
-        <option value="-avg_rating">Highest Rating</option>
-        <option value="avg_rating">Lowest Rating</option>
-        <option value="-menu__price">Highest Price</option>
-        <option value="menu__price">Lowest Price</option>
-      </select>
-      <button type="submit" class="bg-white/50 px-1 rounded-sm border-gray-400 border-2 hover:bg-green-200">
+      <h2 class="font-bold text-lg mb-3">Sort by</h2>
+      <div class="flex flex-col">
+        <label for="newest" class="mb-2" style="width: 220px; font-size: 14px;">
+          <input type="radio" id="newest" name="sort-by" value="-created_at" class="mr-1">
+          Review (newest - oldest)
+        </label>
+        <label for="oldest" class="mb-2" style="width: 220px; font-size: 14px;">
+          <input type="radio" id="oldest" name="sort-by" value="created_at" class="mr-1">
+          Review (oldest - newest)
+        </label>
+        <label for="highest-rating" class="mb-2" style="width: 220px; font-size: 14px;">
+          <input type="radio" id="highest-rating" name="sort-by" value="-avg_rating" class="mr-1">
+          Rating (highest - lowest)
+        </label>
+        <label for="lowest-rating" class="mb-2" style="width: 220px; font-size: 14px;">
+          <input type="radio" id="lowest-rating" name="sort-by" value="avg_rating" class="mr-1">
+          Rating (lowest - highest)
+        </label>
+        <label for="highest-price" class="mb-2" style="width: 220px; font-size: 14px;">
+          <input type="radio" id="highest-price" name="sort-by" value="-menu__price" class="mr-1">
+          Price (highest - lowest)
+        </label>
+        <label for="lowest-price" class="mb-2" style="width: 220px; font-size: 14px;">
+          <input type="radio" id="lowest-price" name="sort-by" value="menu__price" class="mr-1">
+          Price(lowest - highest)
+        </label>
+      </div>
+      <button type="submit" class="bg-amber-300 px-1 rounded-lg border-gray-400 border-2 hover:bg-amber-200 mt-4">
         Sort
-      </button>
-    </form>
-  </div>
-
-  <div class="grid grid-cols-2">
-    <form action="{% url 'core:top' %}" method="GET">
-      {% csrf_token %}
-      <h2 class="mt-5 font-bold text-lg">Filter by:</h2>
-      <label for="restaurant" class="font-semibold text-sm">Restaurant</label>
-      <select id="restaurant" name="restaurant" class="border-gray-400 border-2 rounded-sm">
-        <option value="">-- All --</option>
-        {% for restaurant in restaurants %}
-        <option value="{{ restaurant }}">{{ restaurant }}</option>
-        {% endfor %}
-      </select>
-      <br />
-      <label for="menu" class="font-semibold text-sm">Menu</label>
-      <select id="menu" name="menu" class="border-gray-400 border-2 rounded-sm">
-        <option value="">-- All --</option>
-        {% for menu in menus %}
-        <option value="{{ menu }}">{{ menu }}</option>
-        {% endfor %}
-      </select>
-      <br />
-      <label for="reviewer" class="font-semibold text-sm">Reviewer</label>
-      <select id="reviewer" name="reviewer" class="border-gray-400 border-2 rounded-sm">
-        <option value="">-- All --</option>
-        {% for reviewer in reviewers %}
-        <option value="{{ reviewer }}">{{ reviewer }}</option>
-        {% endfor %}
-      </select>
-      <br />
-      <button type="submit"
-        class="bg-white/50 px-1 rounded-sm border-gray-400 border-2 hover:bg-green-200 col-start-2 mt-2">
-        Filter
       </button>
     </form>
   </div>
 </aside>
 
+
+
+
+
 <main class="flex-1 ml-56 pt-28">
-  <div class="flex-1 ml-10 mx-auto w-4/6 pt-5">
-    <h1 class="text-1xl italic font-bold mb-4">
-      <span
-        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
-        <span class="relative text-white p-1">Best deal</span></span>
-    </h1>
-    <div class="bg-amber-50/90 rounded-lg shadow-lg overflow-hidden">
-      <div class="flex border-amber-100 border-4">
-        {% if best.image %}
-        <div class="relative overflow-hidden w-1/2" style="padding-bottom: 45%">
-          <div class="absolute inset-0">
-            <img class="object-cover h-full w-full" src="{{ best.image.url }}" alt="{{ best.menu.menu }} image" />
-          </div>
-        </div>
-        {% endif %}
-        <div class="px-4 py-2 w-1/2 flex">
-          <div>
-            <h1 class="text-2xl font-bold text-gray-700 mb-2">
-              {{ best.menu.menu }}
-            </h1>
-            <p class="text-gray-600 text-base font-normal mb-2">
-              Reviewed at: {{ best.created_at|date:"Y-m-d" }}
-            </p>
-            <h2 class="text-2xl font-bold text-gray-600">
-              Price:  {{ best.menu.price }} kr
-            </h2>
-            <ul class="text-gray-700 text-lg font-semibold">
-             
-              <li>Restaurant: {{ best.restaurant.name }}</li>
-              <li>Reviewer: {{ best.user.username }}</li>
-              <li></li>
-              <li class="text-gray-600 text-base font-normal mt-1">
-                Like count: {{ best.like_count }}
-              </li>
-            </ul>
-            <div class="text-gray-600 bg-amber-500/80 mx-20 text-center rounded py-1 mt-5 hover:bg-yellow-300">
-              <a href="{% url 'core:detail' id=best.id %}">Detail</a>
+  <div class="flex-1 ml-10 mx-auto w-6/6 pt-5">
+    <section class="flex flex-row items-center justify-between py-10 ">
+      <div class="w-2/6 pl-5">
+        <h2 class="text-4xl font-bold mb-4">"Satisfy your Kebab Cravings with Reviews from the Best Kebab Joints in Town!"</h2>
+        <p class="text-lg mb-8">Discover the best kebab joints in town with our comprehensive kebab review site. From juicy lamb to crispy falafel, our reviews will satisfy your kebab cravings and help you find your new go-to spot.</p>
+      </div>
+      <div class="w-3/6 px-5 mx-0 py-4">
+        <h1 class="text-4xl italic font-bold mb-4">
+          <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
+            <span class="relative text-white p-1">Best Deal</span>
+          </span>
+        </h1>
+        <a href="{% url 'core:detail' id=best.id %}">
+          <div class="rounded-lg shadow-lg overflow-hidden hover:bg-yellow-300">
+            <div class="relative overflow-hidden" style="padding-bottom: 60%">
+              {% if best.image %}
+              <div class="absolute inset-0">
+                <img class="object-cover h-full w-full" src="{{ best.image.url }}" alt="{{ best.menu.menu }} image" />
+              </div>
+              {% endif %}
+              <div class="absolute bottom-0 left-0 w-full text-white p-4 bg-black bg-opacity-50">
+                <h1 class="text-2xl font-bold">{{ best.menu.menu }}</h1>
+                <p class="text-sm">Uploaded by: {{ best.user.username }} {{ best.created_at|date:"Y-m-d" }}</p>
+                <ul class="text-sm font-bold mt-4">
+                  <li>Restaurant: {{ best.restaurant.name }}</li>
+                  <li>Price: SEK {{ best.menu.price }}</li>
+                  <li>Like count: {{ best.like_count }}</li>
+                  <h2 class="text-lg font-bold text-pink-600 mt-4">
+                    <span>
+                      <i style="font-size:24px; color:yellow;" class="fa">&#9733;</i>
+                      Rating: {{ review.avg_rating }}
+                    </span>
+                  </h2>
+                </ul>
+              </div>
             </div>
           </div>
-          <h2 class="text-2xl text-black ml-auto "><span class=" bg-amber-400 font-bold rounded-full ">{{ best.avg_rating }}</span></h2>
-        </div>
-
-    </div>
-  </div>
-
-  <div class="mx-10 mt-28">
-    <h1 class="text-4xl italic font-bold mb-4">
-      <span
-        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
-        <span class="relative text-white p-1">Reviews</span></span>
-    </h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {% for review in reviews %}
-      <div class="bg-yellow-50/90 rounded-lg shadow-lg overflow-hidden">
-        {% if review.image %}
-        <div class="relative overflow-hidden" style="padding-bottom: 56.25%">
-          <div class="absolute inset-0">
-            <img class="object-cover h-full w-full" src="{{ review.image.url }}" alt="{{ review.menu.menu }} image" />
-          </div>
-        </div>
-        {% endif %}
-        <div class="p-4">
-          <h2 class="text-lg font-bold text-gray-800">
-            Menu: {{ review.menu.menu }}
-          </h2>
-          <h2 class="text-lg font-bold text-pink-600">
-            Price: {{ review.menu.price }} kr
-          </h2>
-          <h2 class="text-lg font-bold text-pink-600">
-            Rating: {{ review.avg_rating }}
-          </h2>
-          <p class="text-gray-500 text-sm mt-2">
-            {{ review.created_at|date:"Y-m-d" }}
-          </p>
-          <p class="text-gray-500 text-sm">
-            Reviewer: {{ review.user.username }}
-          </p>
-          <p class="text-gray-500 text-sm">
-            Restaurant: {{ review.restaurant.name }}
-          </p>
-          <div class="text-gray-600 bg-green-300/80 mx-20 text-center rounded py-1 mt-5 hover:bg-yellow-300">
-            <a href="{% url 'core:detail' id=review.id %}">Detail</a>
-          </div>
-        </div>
+        </a>
       </div>
-      {% endfor %}
-    </div>
+    </section>
+    <section>
+     
+    </section>
   </div>
-  </section>
-  <div class="mt-28">
-    <h1 class="text-4xl italic font-bold mb-4 mx-10">
-      <span
-        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
-        <span class="relative text-white p-1">About</span></span>
-    </h1>
-    <div id="about" class="p-10 bg-yellow-50/90 rounded-lg shadow-lg mx-10 mb-5">
-      <p class="text-lg mb-2 font-medium">
-        This website is a review website focused on kebabs. <br />
-        This mainly provide you with menu prices, reviews, restaurant
-        information, <br />
-        and ratings related to kebabs. Users who create an account can leave
-        reviews as well. <br />
-        Here's a brief overview of each of the website's features: <br />
-      </p>
-      <ul>
-        <li>
-          <p class="font-bold underline mt-2 mb-1">● Menu Prices:</p>
-          We will provide you with up-to-date menu prices for various kebab
-          dishes from different restaurants.
-        </li>
-        <li>
-          <p class="font-bold underline mt-2 mb-1">● Reviews:</p>
-          You can leave reviews of their experiences at kebab restaurants,
-          including comments on the food, service, and overall atmosphere.
-        </li>
-        <li>
-          <p class="font-bold underline mt-2 mb-1">● Restaurant Information:</p>
-          We offer you detailed information about kebab restaurants.
-        </li>
-        <li>
-          <p class="font-bold underline mt-2 mb-1">● Ratings:</p>
-          You can rate restaurants based on their overall experience, including
-          the quality of the food, service, and atmosphere.
-        </li>
-        <li>
-          <p class="font-bold underline mt-2 mb-1">● User Accounts:</p>
-          You can create an account to leave reviews and save their favorite
-          restaurants.
-        </li>
-      </ul>
+  
+  
+
+    
+    <!-- bottom section  -->
+    <div class="mx-10 mt-28">
+      <h1 class="text-4xl italic font-bold mb-4">
+        <span
+          class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
+          <span class="relative text-white p-1">Reviews</span></span>
+      </h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for review in reviews %}
+        <div class="bg-yellow-50/90 rounded-lg shadow-lg overflow-hidden">
+          {% if review.image %}
+          <div class="relative overflow-hidden" style="padding-bottom: 56.25%">
+            <div class="absolute inset-0">
+              <img class="object-cover h-full w-full" src="{{ review.image.url }}" alt="{{ review.menu.menu }} image" />
+            </div>
+          </div>
+          {% endif %}
+          <div class="p-4">
+            <h2 class="text-lg font-bold text-gray-800">
+              Menu: {{ review.menu.menu }}
+            </h2>
+            <h2 class="text-lg font-bold text-pink-600">
+              Price: {{ review.menu.price }} kr
+            </h2>
+            <h2 class="text-lg font-bold text-pink-600">
+              Rating: {{ review.avg_rating }}
+            </h2>
+            <p class="text-gray-500 text-sm mt-2">
+              {{ review.created_at|date:"Y-m-d" }}
+            </p>
+            <p class="text-gray-500 text-sm">
+              Reviewer: {{ review.user.username }}
+            </p>
+            <p class="text-gray-500 text-sm">
+              Restaurant: {{ review.restaurant.name }}
+            </p>
+            <div class="text-gray-600 bg-green-300/80 mx-20 text-center rounded py-1 mt-5 hover:bg-yellow-300">
+              <a href="{% url 'core:detail' id=review.id %}">Detail</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
-  </div>
+    </section>
+    <div class="mt-28">
+      <h1 class="text-4xl italic font-bold mb-4 mx-10">
+        <span
+          class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
+          <span class="relative text-white p-1">About</span></span>
+      </h1>
+      <div id="about" class="p-10 bg-yellow-50/90 rounded-lg shadow-lg mx-10 mb-5">
+        <p class="text-lg mb-2 font-medium">
+          This website is a review website focused on kebabs. <br />
+          This mainly provide you with menu prices, reviews, restaurant
+          information, <br />
+          and ratings related to kebabs. Users who create an account can leave
+          reviews as well. <br />
+          Here's a brief overview of each of the website's features: <br />
+        </p>
+        <ul>
+          <li>
+            <p class="font-bold underline mt-2 mb-1">● Menu Prices:</p>
+            We will provide you with up-to-date menu prices for various kebab
+            dishes from different restaurants.
+          </li>
+          <li>
+            <p class="font-bold underline mt-2 mb-1">● Reviews:</p>
+            You can leave reviews of their experiences at kebab restaurants,
+            including comments on the food, service, and overall atmosphere.
+          </li>
+          <li>
+            <p class="font-bold underline mt-2 mb-1">● Restaurant Information:</p>
+            We offer you detailed information about kebab restaurants.
+          </li>
+          <li>
+            <p class="font-bold underline mt-2 mb-1">● Ratings:</p>
+            You can rate restaurants based on their overall experience, including
+            the quality of the food, service, and atmosphere.
+          </li>
+          <li>
+            <p class="font-bold underline mt-2 mb-1">● User Accounts:</p>
+            You can create an account to leave reviews and save their favorite
+            restaurants.
+          </li>
+        </ul>
+      </div>
+    </div>
 </main>
 
-{% endblock content %}§
+{% endblock content %}

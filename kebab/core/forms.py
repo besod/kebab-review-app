@@ -119,15 +119,48 @@ class ContactForm(forms.Form):
 
 
 class UploadForm(forms.ModelForm):
-    taste_rating = forms.IntegerField(min_value=1, max_value=10)
-    service_rating = forms.IntegerField(min_value=1, max_value=10)
-    value_rating = forms.IntegerField(min_value=1, max_value=10)
-
+    taste_rating = forms.IntegerField(
+        min_value=1, max_value=10,
+        widget=forms.NumberInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Score 1-10',
+                'style': 'border: 1px solid #ccc'
+            })
+        )
+    service_rating = forms.IntegerField(
+        min_value=1, max_value=10,
+        widget=forms.NumberInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Score 1-10',
+                'style': 'border: 1px solid #ccc'
+            })
+        )
+    value_rating = forms.IntegerField(
+        min_value=1, max_value=10,
+        widget=forms.NumberInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Score 1-10',
+                'style': 'border: 1px solid #ccc'
+            })
+        )
+    review = forms.CharField(
+        widget = forms.Textarea(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Please write your review.',
+                'style': 'border: 1px solid #ccc'
+        })
+    )
+    image = forms.ImageField(
+        widget = forms.ClearableFileInput(attrs={
+                'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'style': 'border: 1px solid #ccc'
+        })
+    )
     restaurant_name = forms.CharField(
         max_length=100,
         widget = forms.TextInput(attrs={
                 'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
-                'placeholder': 'Restaurant',
+                'placeholder': 'ex) Fresh Kebab',
                 'style': 'border: 1px solid #ccc'
         })
     )
@@ -135,7 +168,7 @@ class UploadForm(forms.ModelForm):
         max_length=200,
         widget=forms.TextInput(attrs={
                 'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
-                'placeholder': 'Address',
+                'placeholder': 'ex) Stockholm Odenplan 0000',
                 'style': 'border: 1px solid #ccc'
         })
     )
@@ -143,7 +176,7 @@ class UploadForm(forms.ModelForm):
         max_length=20, required=False,
         widget=forms.TextInput(attrs={
                 'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
-                'placeholder': 'Telephone',
+                'placeholder': 'ex) 080000000',
                 'style': 'border: 1px solid #ccc'
         })
     )
@@ -151,7 +184,7 @@ class UploadForm(forms.ModelForm):
         required=False,
         widget=forms.URLInput(attrs={
                 'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
-                'placeholder': 'Website',
+                'placeholder': 'https://exmaple.com',
                 'style': 'border: 1px solid #ccc'
         })
     )
@@ -160,13 +193,14 @@ class UploadForm(forms.ModelForm):
         max_length=100,
         widget = forms.TextInput(attrs={
                 'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
-                'placeholder': 'Menu',
+                'placeholder': 'ex) Chicken kebab',
                 'style': 'border: 1px solid #ccc'
         })
     )
     menu_price = forms.IntegerField(
         widget=forms.NumberInput(attrs={
                 'class': 'form-input mt-4 block w-full py-3 px-4 rounded-md text-lg bg-white border-gray-400 focus:bg-white focus:outline-none focus:border-blue-500',
+                'placeholder': 'Price',
                 'style': 'border: 1px solid #ccc'
         })
     )

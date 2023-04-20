@@ -59,19 +59,106 @@
 
 <main class="flex-1 pt-36 pb-10">
 
-  <div class="flex justify-center">
-    <div>
-      <h1 class="text-4xl font-bold mb-3">Create your review</h1>
-      <div>
-        <h2 class="text-2xl font-bold">Upload an Image</h1>
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %} {{ form.as_p }}
-          <button type="submit" class="bg-amber-400">Upload</button>
+  <section class=" bg-amber-500 mx-10 rounded-lg">
+    <div class="flex justify-center">
+      <div class="p-5 text-gray-800">
+        <h1 class="text-4xl font-bold mb-3 text-center">Create your review</h1>
+        <div class="container  shadow-md rounded bg-amber-100/70">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% comment %} {{ form.as_p }} {% endcomment %}
+            <div class="flex flex-wrap">
+              <div class="w-1/2 p-5">
+                <div class="px-8 pt-6 pb-8">
+                  <h2 class="text-center text-xl font-xl mb-4 font-bold">Menu Information</h2>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.menu_name.label }}:
+                    </label>
+                    {{ form.menu_name }}
+                  </div>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.menu_price.label }}:
+                    </label>
+                    {{ form.menu_price }}
+                  </div>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.taste_rating.label }}:
+                    </label>
+                    {{ form.taste_rating }}
+                  </div>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.service_rating.label }}:
+                    </label>
+                    {{ form.service_rating }}
+                  </div>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.value_rating.label }}:
+                    </label>
+                    {{ form.value_rating }}
+                  </div>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.image.label }}:
+                    </label>
+                    {{ form.image }}
+                  </div>
+                </div>
+              </div>
+              <div class="w-1/2 p-2">
+                <div class="px-8 pt-9 pb-8">
+                  <h2 class="text-center text-xl font-xl font-bold mb-4">Restaurant Information</h2>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.restaurant_name.label }}:
+                    </label>
+                    {{ form.restaurant_name }}
+                  </div>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.restaurant_address.label }}:
+                    </label>
+                    {{ form.restaurant_address }}
+                  </div>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2">
+                      {{ form.restaurant_tel.label }}:
+                    </label>
+                    {{ form.restaurant_tel }}
+                  </div>
+                  <div class="mb-4">
+                    <label class="block text-gray-700 text-lg font-bold mb-2" for="id_restaurant_website">
+                      {{ form.restaurant_website.label }}:
+                    </label>
+                    {{ form.restaurant_website }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="px-8 pb-4 mb-4">
+              <h2 class="text-center text-xl font-lg font-bold mb-4">Review Information</h2>
+              <div class="mb-4">
+                <label class="block text-gray-700 text-lg font-bold mb-2">
+                  {{ form.review.label }}:
+                </label>
+                {{ form.review }}
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 flex justify-center">
+            <button type="submit" class="bg-orange-900 text-xl font-bold text-neutral-200 rounded-md px-16 py-2">
+              Upload
+            </button>
+          </div>
         </form>
       </div>
     </div>
-  </div>
-
+  </section>
+    
 </main>
 
 {% endblock content %}

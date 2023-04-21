@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Review, Menu, Restaurant
+from .models import CustomUser, Review, Menu, Restaurant, Comment
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 
@@ -250,3 +250,9 @@ class UploadForm(forms.ModelForm):
         if commit:
             review.save()
         return review
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ['review', 'created_at']

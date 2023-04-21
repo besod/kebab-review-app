@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Review, Menu, Restaurant
+from .models import CustomUser, Review, Menu, Restaurant, Comment
 
 
 @admin.register(CustomUser)
@@ -23,4 +23,7 @@ class RestaurantAdmin(admin.ModelAdmin):
     model = Restaurant
     list_display = ['name']
 
-
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    model = Comment
+    list_display = ['name']

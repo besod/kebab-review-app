@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
-from .forms import SignupForm, LogInForm, ContactForm, UploadForm
-from .models import Contact, Review, CustomUser
+from .forms import SignupForm, LogInForm, ContactForm, UploadForm, CommentForm
+from .models import Contact, Review, CustomUser, Comment
 from django.contrib.auth.decorators import login_required
 
 
@@ -142,6 +142,23 @@ def user_profile(request, username):
     }
     redirect
     return render(request, 'account/profile.html', context=context)
+
+
+def post_comment(request, id):
+    review = get_object_or_404(Review, id=id)
+    comment = None
+    form = CommentForm(data=request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.review = review
+        comment.save()
+    context = {
+        'target_review': review,
+        'comment_form': form,
+        'comment': comment
+    }
+    return render(request, 'core/detail.html', context)
+
 
 
 # When inplement create_review function, use this maybe

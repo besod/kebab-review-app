@@ -1,5 +1,12 @@
 {% extends 'core/base.html' %} {% block content %} {% load static %}
 
+<head>
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-Vf8mRbSJFJZFK6/CbVhPmibq+3mJVjIaDtfkwO5OAM3qee0LpYCrKAjO49qq08Q5J5R5l5Q2f+LPcHpfLd8Bw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
 <header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
   <nav class="flex items-center w-full">
     <div class="flex justify-between items-center space-x-5">
@@ -19,8 +26,6 @@
     </div>
     <div class="flex-grow lg:flex lg:items-center lg:w-auto">
       {% if user.is_authenticated %}
-      <!-- fetch user from database -->
-
       <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
         <li>
           <p class="text-lg font-bold mr-4 text-white">
@@ -54,49 +59,163 @@
   </nav>
 </header>
 
-<main class="flex-1 mx-24 pt-40">
-  <div class="bg-yellow-50/90 rounded-lg shadow-lg overflow-hidden">
-    <div class="flex border-green-200 border-4">
-      {% if review.image %}
-      <div class="relative overflow-hidden w-1/2" style="padding-bottom: 45%">
-        <div class="absolute inset-0">
-          <img
-            class="object-cover h-full w-full"
-            src="{{ review.image.url }}"
-            alt="{{ review.menu.menu }} image"
-          />
-        </div>
-      </div>
-      {% endif %}
-      <div class="px-8 py-4 w-1/2">
-        <h1 class="text-4xl font-bold text-gray-700 mb-6">
-          {{ review.menu.menu }}
-        </h1>
-        <h2 class="text-2xl font-bold text-pink-600">
-          Price: {{ review.menu.price }} kr
-        </h2>
-        <h2 class="text-2xl font-bold text-pink-600 mb-3">
-          Rating: {{ review.avg_rating }}
-        </h2>
-        <ul class="text-gray-700 text-lg font-semibold">
-          <li class="text-gray-600 text-base font-normal mb-2">
-            Reviewed at: {{ review.created_at|date:"Y-m-d" }}
-          </li>
-          <li>Restaurant: {{ review.restaurant.name }}</li>
-          <li>Reviewer: {{ review.user.username }}</li>
-          <li>Review: {{ review.review }}</li>
-          <li class="text-gray-600 text-base font-normal mt-1">
-            Like count: {{ review.like_count }}
-          </li>
-        </ul>
-      </div>
-    </div>
+<main class="flex-1 mx-16 pt-32">
+
+  <section class="bg-amber-600 rounded-lg shadow-lg overflow-hidden mb-5">
+
     <div>
-      <div>
-        <a href="{% url 'comment' id=review %}">Post Comment</a>
+      <h1 class="text-5xl text-center font-bold p-10 mt-5">
+        {{ review.user.username }}'s Review
+        <span class="text-4xl">
+          &nbsp;&nbsp;on "{{ review.menu.menu }}"
+        </span>
+      </h1>
+      <div class="flex mx-10 bg-amber-50 rounded-lg">
+        {% if review.image %}
+        <div class="relative overflow-hidden w-80 max-w-80 h-80 max-h-80 rounded-l-lg">
+          <div class="absolute inset-0">
+            <img
+              class="w-full h-full aspect-w-1 aspect-h-1 object-cover object-center"
+              src="{{ review.image.url }}"
+              alt="{{ review.menu.menu }} image"
+            />
+          </div>
+        </div>
+        {% endif %}
+        <div class="px-5 mx-8 py-5 text-xl font-semibold w-4/7 text-center">
+          <div class="text-xl font-bold text-pink-600 mb-3">
+            <p class="text-2xl mb-2">Price: {{ review.menu.price }}kr</p>
+            <ul class="flex">
+              <li class="mr-5">Taste: {{ review.taste_rating }}</li>
+              <li class="mr-5">Service: {{ review.service_rating }}</li>
+              <li class="mr-5">Value: {{ review.value_rating }}</li>
+            </ul>
+          </div>
+          <ul class="text-lg font-bold">
+            <li class="text-gray-600 text-sm font-normal mb-2">
+              Posted: {{ review.created_at|date:"Y-m-d" }}
+            </li>
+            <li>
+              Restaurant: <span class="font-semibold">{{ review.restaurant.name }}</span>
+            </li>
+            <li>
+              Review: <span class="font-semibold">{{ review.review }}</span>
+            </li>
+            {% comment %} <li class="text-base font-normal mt-1">
+              Like count: {{ review.like_count }}
+            </li> {% endcomment %}
+          </ul>
+        </div>
+        {% if review.image %}
+        <div class="relative overflow-hidden w-80 max-w-80 h-80 max-h-80 rounded-r-lg">
+          <div class="absolute inset-0">
+            <img
+              class="w-full h-full aspect-w-1 aspect-h-1 object-cover object-center"
+              src="{{ review.image.url }}"
+              alt="{{ review.menu.menu }} image"
+            />
+          </div>
+          <div class="absolute bottom-0 left-0 w-full h-full text-white bg-black/70 flex justify-center">
+            <div class="py-10 text-center">
+              <h2 class="font-bold text-2xl mb-2">
+                Average rating by {{ review.user.username }}
+              </h2>
+              <p class="mb-10">
+                <span class="text-xl font-bold text-pink-500">
+                  <i class="text-yellow-300 text-2xl fas fa-star">&#9733;</i>
+                  <span class="text-3xl font-bold text-pink-500">
+                    &nbsp;{{ review.avg_rating }}
+                  </span>
+                </span>
+              </p>
+              <h2 class="font-bold text-2xl mb-2">
+                Modified rating by Viewer
+              </h2>
+              <p>
+                <p>
+                  <span class="text-xl font-bold text-pink-500">
+                    <i class="text-yellow-300 text-2xl fas fa-star">&#9733;</i>
+                    <span class="text-3xl font-bold text-pink-500">
+                      &nbsp;{{ review.avg_rating }}
+                    </span>
+                  </span>
+                </p>
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
       </div>
     </div>
-  </div>
+    
+    <p class="border-t-2 border-slate-200/70 mx-48 mt-20"></p>
+
+    <div class="px-10 mt-5">
+      <h2 class="font-bold text-4xl text-center mt-20 mb-3">
+        Add a comment to {{ review.user.username }}
+      </h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="grid grid-cols-2 gap-6">
+          <div class="flex flex-col col-span-1">
+            <label class="block font-bold text-xl mb-2">
+              {{ comment_form.name.label }}
+            </label>
+            {{ comment_form.name }}
+            <label class="block font-bold text-xl mb-2 mt-5">
+              {{ comment_form.avg_rating.label }}
+            </label>
+            <div class="grid grid-cols-5 gap-2 mb-5">
+              {% for radio in comment_form.avg_rating %}
+              <div class="flex items-center">
+                {{ radio }}
+              </div>
+              {% endfor %}
+            </div>
+            <button type="submit" class="bg-amber-900 text-white font-bold py-1 rounded-lg text-2xl mt-6">
+              Submit
+            </button>
+          </div>
+          <div class="col-span-1">
+            <div class="flex flex-col">
+              <label class="block font-bold text-xl mb-2">
+                {{ comment_form.comment.label }}
+              </label>
+              {{ comment_form.comment }}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>    
+    
+    <p class="border-t-2 border-slate-200/70 mx-48 mt-20"></p>
+
+    <div class="px-10 mb-8">
+      <h2 class="font-bold text-4xl text-center pb-4 mt-16">Comments</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {% for c in comments %}
+        <div class="bg-gray-50 border border-gray-300 p-4 rounded-lg shadow-md">
+          <p class="text-xl font-bold">
+            {{ c.name }}&nbsp;&nbsp;
+            <span>
+              <i class="text-yellow-400 text-2xl fas fa-star">&#9733;</i>
+              <span class="text-3xl font-bold text-pink-500">
+                {{ review.avg_rating }}</span>
+            </span>
+          </p>
+          <p class="text-xs font-normal text-gray-500 mb-2">
+            {{ c.created_at|date:"Y-m-d" }}
+          </p>
+          <p class="text-base leading-6">{{ c.comment }}</p>
+        </div>
+        {% empty %}
+        <p>No comments yet</p>
+        {% endfor %}
+      </div>
+    </div>
+
+  </section>
+
 </main>
 
 

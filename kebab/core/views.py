@@ -52,11 +52,23 @@ def top(request):
 
 
 def detail(request, id):
-    review = get_object_or_404(Review, id=id)
+    target_review = get_object_or_404(Review, id=id)
+    comments = Comment.objects.filter(review=target_review)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.review = target_review
+            comment.save()
+            return redirect('core:detail', id=id)
+    else:
+        form = CommentForm()
     context = {
-        'review': review
+        'review': target_review,
+        'comment_form': form,
+        'comments': comments
     }
-    return render(request, 'core/detail.html', context, status=200)
+    return render(request, 'core/detail.html', context)
 
 
 def signup(request):
@@ -143,21 +155,6 @@ def user_profile(request, username):
     redirect
     return render(request, 'account/profile.html', context=context)
 
-
-def post_comment(request, id):
-    review = get_object_or_404(Review, id=id)
-    comment = None
-    form = CommentForm(data=request.POST)
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.review = review
-        comment.save()
-    context = {
-        'target_review': review,
-        'comment_form': form,
-        'comment': comment
-    }
-    return render(request, 'core/detail.html', context)
 
 
 

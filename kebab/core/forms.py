@@ -213,11 +213,12 @@ class UploadForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     def save(self, commit=True):
-
         try:
             restaurant = Restaurant.objects.get(
                 name=self.cleaned_data['restaurant_name'],
-                address=self.cleaned_data['restaurant_address']
+                address=self.cleaned_data['restaurant_address'],
+                tel=self.cleaned_data['restaurant_tel'],
+                website=self.cleaned_data['restaurant_website']
             )
         except Restaurant.DoesNotExist:
             restaurant = Restaurant.objects.create(
@@ -253,6 +254,24 @@ class UploadForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
+    SERVICE_CHOICES = [(i, str(i)) for i in range(1, 11)]
+
+    name = forms.CharField(
+        max_length=80,
+        widget = forms.TextInput(attrs={
+                'class': 'border-2 border-gray-400 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-900 bg-amber-50',
+                'placeholder': 'Your username'
+        }))
+    avg_rating = forms.ChoiceField(
+        choices=SERVICE_CHOICES,
+        widget=forms.RadioSelect(attrs={'class': 'form-radio mt-4'
+        }))
+    comment = forms.CharField(
+        widget=forms.Textarea(attrs={
+                'class':'border-2 border-gray-400 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-900 bg-amber-50',
+                'placeholder': 'Leave your comment here.'
+        }))
+    
     class Meta:
         model = Comment
         exclude = ['review', 'created_at']

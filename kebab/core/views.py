@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
-from .forms import SignupForm, LogInForm, ContactForm, UploadForm, CommentForm
+from .forms import SignupForm, LogInForm, ContactForm, UploadForm, CommentForm, ReviewForm
 from .models import Contact, Review, CustomUser, Comment
 from django.contrib.auth.decorators import login_required
 
@@ -146,16 +146,48 @@ def contact(request):
         return render(request, 'core/contact.html', context)
 
 
+@login_required
 def user_profile(request, username):
-    context = {}
     user = get_object_or_404(CustomUser, username=username)
-    context = {
-        'user': user
-    }
-    redirect
-    return render(request, 'account/profile.html', context=context)
+    reviews = Review.objects.filter(user=user)
+    context = {'user': user, 'reviews': reviews}
+    return render(request, 'account/profile.html', context)
 
 
+@login_required
+def delete_review(request, id):
+    review = get_object_or_404(Review, id=id)
+    if request.method == 'POST':
+        # Delete the review from the database
+        review.delete()
+        # Redirect the user to the home page
+        return redirect('core:top')
+    return render(request, 'core/delete_review.html', {'review': review})
+
+
+@login_required
+def edit_review(request, id):
+    review = get_object_or_404(Review, id=id, user=request.user)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('core:profile', username=request.user.username)
+    else:
+        form = ReviewForm(instance=review)
+    return render(request, 'core/edit_review.html', {'form': form})
+
+
+@login_required
+def password_change(request):
+    # add password change functionality
+    return render(request, 'account/password_change.html')
+
+
+@login_required
+def account_settings(request):
+    # Add account settings functionality
+    return render(request, 'account/account_settings.html')
 
 
 # When inplement create_review function, use this maybe

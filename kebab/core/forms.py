@@ -275,3 +275,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         exclude = ['review', 'created_at']
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['menu', 'restaurant', 'image']

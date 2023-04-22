@@ -1,1 +1,151 @@
-{% extends 'core/base.html' %} {% block content %} {% load static %} {% endblock%}
+{% extends 'core/base.html' %} {% block content %}
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
+  <nav class="flex items-center w-full">
+    <div class="flex justify-between items-center space-x-5">
+      <a href="http://127.0.0.1:8000/core/">
+       
+      </a>
+      <p class="mt-2 text-3xl font-bold italic text-white">
+        Amazing
+        <span
+          class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
+          <span class="relative text-white">kebab</span> </span>!
+      </p>
+    </div>
+    <div class="flex-grow lg:flex lg:items-center lg:w-auto">
+      
+      {% if user.is_authenticated %}
+      <!-- fetch user from database -->
+
+      <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
+        <li>
+          <p class="text-lg font-bold mr-4 text-white hover:bg-">
+            Hello <a class="hover:text-amber-600" href="{% url 'core:profile' username=user.username %} ">{{ user.username }}!</a>
+            </p>
+        </li>
+        <li>
+          <a href="{% url 'core:upload' %}"
+            class="bg-amber-500 rounded-full px-4 py-2 mr-1 text-black font-bold hover:bg-amber-600">Review</a>
+        </li>
+        <li>
+          <span class="text-gray-500 font-bold">|</span></li>
+        <li>
+          <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 mx-2 text-black hover:bg-amber-600">Log Out</a>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
+        <li>
+          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 font-bold hover:bg-amber-600">Log
+            In</a>
+        </li>
+        <li>
+          <span class="text-gray-500 font-bold">|</span>
+        </li>
+        <li>
+          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-black ml-2 hover:bg-amber-600">Sign
+            Up</a>
+        </li>
+        {% endif %}
+        
+      
+    </div>
+    <span class="text-gray-500 font-bold">|</span>
+    <a href="{% url 'core:contact' %}"
+            class="bg-amber-500 rounded-full px-4 py-2 mx-2 text-black font-bold hover:bg-amber-600">contact</a>
+  </nav>
+</header>
+
+<!-- body  -->
+<div class="flex items-center justify-center h-screen mt-12 pt-6">
+  
+  <div class="w-4/5 p-4">
+    
+    
+    <!-- aside -->
+    <div class="w-1/5 p-4">
+      <aside class="w-48 bg-white shadow-md fixed h-full font-bold">
+        <ul class="flex flex-col space-y-4 py-4 px-2">
+          <li><h1 class="text-start items-start justify-start font-bold text-2xl">
+            My page <hr class="border-gray-200 border-1">
+          </h1></li>
+          <li>
+            <a href="{% url 'core:top' %}" class="hover:text-amber-800">  Home</a>
+          </li>
+          <li>
+            <a
+              href="{% url 'core:password_change' %}"
+              class="hover:text-amber-800"
+              >Change Password</a
+            >
+          </li>
+          <li>
+            <a
+              href="{% url 'core:account_settings' %}"
+              class="hover:text-amber-800"
+              >Settings</a
+            >
+          </li>
+          <li>
+            <form method="post" action="{% url 'core:logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="hover:text-amber-800">Logout</button>
+            </form>
+          </li>
+        </ul>
+      </aside>
+    </div>
+    <!-- list view of profile cards -->
+    <div class="flex flex-col-reverse justify-center ml-64">
+      {% for review in reviews reversed %}
+      <div
+        class="border-2 border-black shadow-md p-4 w-full my-4 relative hover:bg-slate-100"
+      >
+        <a href="{% url 'core:detail' id=review.id %}" class="flex">
+          <img
+            src="{{ review.image.url }}"
+            alt="Review Image"
+            class="max-w-sm max-h-xs mr-4"
+          />
+          <div class="flex-1">
+            <strong>Created:</strong> {{ review.created_at }}
+            <br />
+            <strong>Menu:</strong> {{ review.menu }}
+            <br />
+            <strong>Restaurant:</strong> {{ review.restaurant.name }}
+          </div>
+        </a>
+        <!-- parent div for delete/edit button -->
+        <div class="absolute top-48 right-0">
+          <div class="flex gap-2">
+            <form
+              action="{% url 'core:delete_review' id=review.id %}"
+              method="POST"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="bg-red-500 text-white px-4 py-2 text-sm rounded-full hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </form>
+            <a
+              href="{% url 'core:edit_review' id=review.id %}"
+              class="bg-green-500 text-white px-4 py-2 text-sm rounded-full mr-2 hover:bg-green-700"
+            >
+              Edit
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

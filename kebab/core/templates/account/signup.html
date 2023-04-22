@@ -1,43 +1,49 @@
 {% extends 'core/base.html' %} {%load static%} {% block content %}
 
-<div class="flex flex-col items-center justify-center h-screen">
-  
-  <section style="border: 1px solid gray; border-radius: 0.5rem;"
-  class="py-6 px-16 bg-yellow-100">
-    <div class="bg-green-500 w-full mb-2 py-1 rounded-sm">
+<div class="flex flex-col items-center justify-center h-screen mt-28">
+  <section
+    style="border: 1px solid gray; border-radius: 0.5rem"
+    class="py-6 px-16 bg-"
+  >
+    <div class="bg-amber-500 w-full mb-2 py-1 rounded-full">
       <h2 class="text-3xl font-bold my-2 text-center text-white">
         Sign Up Form
       </h2>
     </div>
     <form method="POST" class="w-full max-w-md">
       <div class="mb-4 block text-dark-700 font-bold text-lg">
-        {% csrf_token %}
-        {% for field in form %}
+        {% csrf_token %} {% for field in form %}
         <dt>
-          <label class="font-bold text-lg" 
-          for="{{ field.id_for_label }}">{{ field.label }}:</label>
+          <label class="font-bold text-lg" for="{{ field.id_for_label }}"
+            >{{ field.label }}:</label
+          >
         </dt>
         <dd>{{ field }}</dd>
-          {% if field.errors %}
-          <p class="text-gray-600">{{ field.errors }}</p>
-          {% endif %}
-        {% endfor %}
+        {% if field.errors %}
+        <p class="text-gray-600">{{ field.errors }}</p>
+        {% endif %} {% endfor %}
       </div>
       <div class="text-center">
-        <button type="submit"
-        class="bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mt-4">
-        Submit</button>
+        <button
+          type="submit"
+          class="bg-amber-700 hover:bg-amber-900 text-white font-bold py-2 px-4 rounded mt-4"
+        >
+          Submit
+        </button>
         <div class="mt-1">
           <p class="text-gray-600">
-            Cancel to register?<br>
-            <a href="{% url 'core:top' %}" class="underline text-blue-500 hover:text-blue-800">
-              Back to Top page</a>
+            Cancel to register?<br />
+            <a
+              href="{% url 'core:top' %}"
+              class="underline text-blue-500 hover:text-amber-800"
+            >
+              Back to Top page</a
+            >
           </p>
         </div>
       </div>
     </form>
   </section>
-
 </div>
 
 {% endblock content %}

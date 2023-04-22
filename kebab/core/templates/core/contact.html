@@ -1,12 +1,12 @@
 {% extends 'core/base.html' %} {% block content %} {% load static %}
 
-<section class="container mx-auto px-4 py-16">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
+<section class="container mx-auto max-w-7xl px-4 max-h-60 py-28">
+  <div class="grid grid-cols-1 md:grid-cols-3 max-h-80 gap-0">
     <div
       class="bg-amber-600 shadow-lg p-6 md:col-span-2 rounded-tl-lg rounded-bl-lg"
     >
       <h2 class="text-2xl md:text-2xl font-bold mb-4 pt-4">
-        Tell us what you like (and what not)
+        Tell us what you like and what not
       </h2>
       <form action="{% url 'core:contact' %}" method="POST">
         {% csrf_token %}

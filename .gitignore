@@ -2,4 +2,4 @@
 venv/
 
 # ignore database
-# kebab/db.sqlite3
+ kebab/db.sqlite3

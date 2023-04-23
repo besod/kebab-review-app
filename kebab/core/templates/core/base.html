@@ -9,14 +9,40 @@
     <link rel="icon" type="image/png" href="{% static 'core/icon-kebab.png' %}" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   </head>
-  
-  {% block content %}
-  <body>
-    <!-- navbar -->
 
+  <div class="container">
+    {% block content %}
+    <body>
+     
+    </body>
+    {% endblock %}
+  </div>
 
-    
-  </body>
-  {% endblock %}
+  <script type="text/javascript" src="{% static 'core/js/ajax.js' %}"></script>
+  <script>
+    $(document).ready(function() {
+      $('#like-btn').click(function() {
+        $.ajax({
+          url: '/core/detail/' + {{ review.id }} + '/like/',
+          type: 'POST',
+          data: {
+            'review_id': {{ review.id }},
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+          },
+          dataType: 'json',
+          success: function(response) {
+            $('#like-count').text(response.like_count);
+            $('#like-btn span').text('(' + response.review_like_count + ')');
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.responseText);
+            alert('Error happened.');
+          }
+        });
+      });
+    });    
+  </script>
+
 </html>

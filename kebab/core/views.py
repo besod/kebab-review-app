@@ -4,6 +4,7 @@ from django.urls import reverse
 from .forms import SignupForm, LogInForm, ContactForm, UploadForm, CommentForm, ReviewForm
 from .models import Contact, Review, CustomUser, Comment, Menu
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 # def home(request):
@@ -185,6 +186,37 @@ def edit_review(request, id):
     else:
         form = ReviewForm(instance=review)
     return render(request, 'account/edit_review.html', {'form': form})
+
+
+def search_results(request):
+    query = request.GET.get('q')
+    restaurant_name = request.GET.get('restaurant')
+    menu_name = request.GET.get('menu')
+    reviewer_name = request.GET.get('reviewer')
+
+    reviews = Review.objects.all()
+
+    if query:
+        reviews = reviews.filter(
+            Q(restaurant__name__icontains=query) |
+            Q(menu__menu__icontains=query) |
+            Q(review__icontains=query) |
+            Q(user__username__icontains=query)
+        )
+
+    if restaurant_name:
+        reviews = reviews.filter(restaurant__name=restaurant_name)
+    elif menu_name:
+        reviews = reviews.filter(menu__menu=menu_name)
+    elif reviewer_name:
+        reviews = reviews.filter(user__username=reviewer_name)
+
+    context = {
+        'query': query,
+        'reviews': reviews,
+    }
+
+    return render(request, 'core/search_results.html', context)
 
 
 @login_required

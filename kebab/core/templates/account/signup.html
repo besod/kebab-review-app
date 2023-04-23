@@ -6,9 +6,7 @@
     class="py-6 px-16 bg-"
   >
     <div class="bg-amber-500 w-full mb-2 py-1 rounded-full">
-      <h2 class="text-3xl font-bold my-2 text-center text-white">
-        Sign Up Form
-      </h2>
+      <h2 class="text-3xl font-bold my-2 text-center text-white">Sign Up</h2>
     </div>
     <form method="POST" class="w-full max-w-md">
       <div class="mb-4 block text-dark-700 font-bold text-lg">
@@ -22,6 +20,25 @@
         {% if field.errors %}
         <p class="text-gray-600">{{ field.errors }}</p>
         {% endif %} {% endfor %}
+      </div>
+      <div class="flex items-start mb-6">
+        <div class="flex items-center h-5">
+          <input
+            id="terms"
+            type="checkbox"
+            value=""
+            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+            required
+          />
+        </div>
+        <label
+          for="terms"
+          class="ml-2 text-lg font-medium text-gray-900 dark:text-gray-300"
+          >I agree with the
+          <a href="#" class="text-blue-600 hover:underline dark:text-blue-500"
+            >terms and conditions</a
+          ></label
+        >
       </div>
       <div class="text-center">
         <button

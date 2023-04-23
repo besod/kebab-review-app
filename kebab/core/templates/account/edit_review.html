@@ -1,10 +1,48 @@
-{% extends 'core/base.html' %} {% block content %}
-
-<h1>Edit Review</h1>
-
-<form method="post">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Save Changes</button>
-</form>
-
+{% extends 'core/base.html' %} {% load static %} {% block content %}
+<div class="max-w-md mx-auto mt-20 py-4">
+  <div
+    class="border bg-amber-300 border-gray-300 rounded-md px-4 py-8 mx-auto max-w-lg"
+  >
+    <h2 class="text-xl font-semibold mb-4">Edit: {{ form.instance.menu }}</h2>
+    <form method="POST" class="bg-amber-300">
+      {% csrf_token %} {% for field in form %}
+      <div class="mb-4">
+        <label
+          class="block text-gray-700 font-bold mb-2"
+          for="{{ field.id_for_label }}"
+        >
+          {% if field.label == 'Menu' %} {{ field.label }}:
+          {{form.instance.menu}} {% elif field.label == 'Restaurant' %} {{
+          field.label }}: {{form.instance.restaurant }} {% else %} {{
+          field.label }} {% endif %}
+        </label>
+        <input
+          type="{{ field.field.widget.input_type }}"
+          name="{{ field.name }}"
+          id="{{ field.id_for_label }}"
+          value="{{ field.value }}"
+          class="appearance-none border border-gray-200 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
+        />
+        {% if field.help_text %}
+        <small class="text-gray-500">{{ field.help_text }}</small>
+        {% endif %} {% if field.errors %}
+        <ul class="mt-1 text-red-500 text-sm">
+          {% for error in field.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <div class="mt-8">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-amber-700 text-white rounded hover:bg-amber-600 focus:outline-none focus:bg-amber-600"
+        >
+          Update Review
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
 from .forms import SignupForm, LogInForm, ContactForm, UploadForm, CommentForm, ReviewForm
-from .models import Contact, Review, CustomUser, Comment
+from .models import Contact, Review, CustomUser, Comment, Menu
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, JsonResponse, HttpResponseBadRequest
 
@@ -181,11 +181,20 @@ def edit_review(request, id):
     if request.method == 'POST':
         form = ReviewForm(request.POST, request.FILES, instance=review)
         if form.is_valid():
+            # Get the menu instance based on the submitted name
+            menu_name = form.cleaned_data['menu']
+            menu = get_object_or_404(Menu, name=menu_name)
+
+            # Assign the menu instance to the review
+            review.menu = menu
+
+            # Save the form
             form.save()
+
             return redirect('core:profile', username=request.user.username)
     else:
         form = ReviewForm(instance=review)
-    return render(request, 'core/edit_review.html', {'form': form})
+    return render(request, 'account/edit_review.html', {'form': form})
 
 
 @login_required

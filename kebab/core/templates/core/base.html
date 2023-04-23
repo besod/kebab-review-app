@@ -1,24 +1,82 @@
-<!-- templates/base.html -->
-{% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="{% static 'core/icon-kebab.png' %}" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  </head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+  <header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
+    <nav class="flex items-center w-full">
+      <div class="flex justify-between items-center space-x-5">
+        <a href="http://127.0.0.1:8000/core/">
+
+        </a>
+        <p class="mt-2 text-3xl font-bold italic text-white">
+          Amazing
+          <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
+            <span class="relative text-white">kebab</span> </span>!
+        </p>
+      </div>
+      <div class="flex-grow lg:flex lg:items-center lg:w-auto">
+
+        {% if user.is_authenticated %}
+        <!-- fetch user from database -->
+
+        <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
+          <li>
+            <p class="text-lg font-bold mr-4 text-white hover:bg-">
+              Hello <a class="hover:text-amber-600" href="{% url 'core:profile' username=user.username %} ">{{ user.username }}!</a>
+            </p>
+          </li>
+          <li>
+            <a href="{% url 'core:upload' %}" class="bg-amber-500 rounded-full px-4 py-2 mr-1 text-black font-bold hover:bg-amber-600">Review</a>
+          </li>
+          <li>
+            <span class="text-gray-500 font-bold">|</span>
+          </li>
+          <li>
+            <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 mx-2 text-black hover:bg-amber-600">Log Out</a>
+          </li>
+        </ul>
+        {% else %}
+        <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
+          <li>
+            <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 text-lg font-bold hover:bg-amber-600">Log
+              In</a>
+          </li>
+          <li>
+            <span class="text-gray-500 font-bold">|</span>
+          </li>
+          <li>
+            <a href="{% url 'core:signup' %}" class="bg-amber-500 text-lg font-bold rounded-full px-4 py-2 text-black mr-3 hover:bg-amber-600">Sign
+              Up</a>
+          </li>
+          {% endif %}
+
+
+      </div>
+      <span class="text-gray-500 font-bold">|</span>
+      <a href="{% url 'core:contact' %}" class="bg-amber-500 rounded-full px-4 py-2 mx-2 text-black text-lg font-bold hover:bg-amber-600">Contact</a>
+    </nav>
+  </header>
 
   <div class="container">
     {% block content %}
-    <body>
-     
-    </body>
+    
     {% endblock %}
   </div>
+
+<footer>
+  <!-- footer here -->
+
+</footer>
+
+
+  {% load static %}
 
   <script type="text/javascript" src="{% static 'core/js/ajax.js' %}"></script>
   <script>

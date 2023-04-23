@@ -11,7 +11,11 @@
   <nav class="flex items-center w-full">
     <div class="flex justify-between items-center space-x-5">
       <a href="http://127.0.0.1:8000/core/">
-       
+        <!-- <img
+          src="{% static 'core/kebab.webp' %}"
+          alt="Kebab"
+          class="w-24 rounded-full hover:animate-pulse"
+        /> -->
       </a>
       <p class="mt-2 text-3xl font-bold italic text-white">
         Amazing
@@ -21,63 +25,49 @@
       </p>
     </div>
     <div class="flex-grow lg:flex lg:items-center lg:w-auto">
-      
       {% if user.is_authenticated %}
-      <!-- fetch user from database -->
-
       <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
         <li>
-          <p class="text-lg font-bold mr-4 text-white hover:bg-">
-            Hello <a class="hover:text-amber-600" href="{% url 'core:profile' username=user.username %} ">{{ user.username }}!</a>
-            </p>
+          <p class="text-lg font-bold mr-4 text-white">
+            Hi {{ user.username }}!
+          </p>
         </li>
         <li>
           <a href="{% url 'core:upload' %}"
-            class="bg-amber-500 rounded-full px-4 py-2 mr-1 text-black font-bold hover:bg-amber-600">Review</a>
+            class="bg-amber-500 rounded-full px-4 py-2 mr-4 text-black font-bold">Review</a>
         </li>
         <li>
-          <span class="text-gray-500 font-bold">|</span></li>
-        <li>
-          <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 mx-2 text-black hover:bg-amber-600">Log Out</a>
+          <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-black">Log Out</a>
         </li>
       </ul>
       {% else %}
       <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
         <li>
-          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 font-bold hover:bg-amber-600">Log
+          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-white mr-2 font-bold">Log
             In</a>
         </li>
         <li>
           <span class="text-gray-500 font-bold">|</span>
         </li>
         <li>
-          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-black ml-2 hover:bg-amber-600">Sign
+          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-white ml-2">Sign
             Up</a>
         </li>
-        {% endif %}
-        
+      </ul>
+      {% endif %}
     </div>
-    <span class="text-gray-500 font-bold">|</span>
-    <a href="{% url 'core:contact' %}"
-            class="bg-amber-500 rounded-full px-4 py-2 mx-2 text-black font-bold hover:bg-amber-600">contact</a>
   </nav>
 </header>
 
 <main class="flex-1 mx-16 pt-32">
 
-  <section class="bg-amber-500 rounded-lg shadow-lg overflow-hidden mb-5">
+  <section class="bg-amber-600 rounded-lg shadow-lg overflow-hidden mb-5">
 
-    <div class="card">
+    <div>
       <h1 class="text-5xl text-center font-bold p-10 mt-5">
         {{ review.user.username }}'s Review
         <span class="text-4xl">
           &nbsp;&nbsp;on "{{ review.menu.menu }}"
-        </span>
-        <span>
-          <button id="like-btn" type="button"
-            class="bg-yellow-300 text-2xl rounded-3xl text-black font-bold py-1 px-3 mt-5">
-            Like! <span id="like-count">({{ review.like_count }})</span>
-          </button>
         </span>
       </h1>
       <div class="flex mx-10 bg-amber-50 rounded-lg">
@@ -94,7 +84,7 @@
         {% endif %}
         <div class="px-5 mx-8 py-5 text-xl font-semibold w-4/7 text-center">
           <div class="text-xl font-bold text-pink-600 mb-3">
-            <p class="text-3xl mb-2">Price: {{ review.menu.price }}kr</p>
+            <p class="text-2xl mb-2">Price: {{ review.menu.price }}kr</p>
             <ul class="flex">
               <li class="mr-5">Taste: {{ review.taste_rating }}</li>
               <li class="mr-5">Service: {{ review.service_rating }}</li>
@@ -133,7 +123,7 @@
               <p class="mb-10">
                 <span class="text-xl font-bold text-pink-500">
                   <i class="text-yellow-300 text-2xl fas fa-star">&#9733;</i>
-                  <span class="text-4xl font-bold text-pink-500">
+                  <span class="text-3xl font-bold text-pink-500">
                     &nbsp;{{ review.avg_rating }}
                   </span>
                 </span>
@@ -145,8 +135,8 @@
                 <p>
                   <span class="text-xl font-bold text-pink-500">
                     <i class="text-yellow-300 text-2xl fas fa-star">&#9733;</i>
-                    <span class="text-4xl font-bold text-pink-500">
-                      &nbsp;{{ viewer_rating }}
+                    <span class="text-3xl font-bold text-pink-500">
+                      &nbsp;{{ review.avg_rating }}
                     </span>
                   </span>
                 </p>
@@ -210,7 +200,7 @@
             <span>
               <i class="text-yellow-400 text-2xl fas fa-star">&#9733;</i>
               <span class="text-3xl font-bold text-pink-500">
-                {{ c.avg_rating }}</span>
+                {{ review.avg_rating }}</span>
             </span>
           </p>
           <p class="text-xs font-normal text-gray-500 mb-2">
@@ -227,5 +217,6 @@
   </section>
 
 </main>
+
 
 {% endblock content %}

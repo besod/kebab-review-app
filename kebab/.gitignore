@@ -1,13 +1,7 @@
 # .gitignore
 
-<<<<<<< HEAD
-__pycache__/
-*.py[cod]
-*$py.class
+# __pycache__/
+# *.py[cod]
+# *$py.class
 
 
-=======
-__pycache__/
-*.py[cod]
-*$py.class
->>>>>>> 086da14b2ed0e2443849b4b6da6be242248414ad

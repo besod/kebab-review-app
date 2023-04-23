@@ -16,5 +16,4 @@ urlpatterns = [
     path('core/review/<int:id>/edit/', views.edit_review, name='edit_review'),
     path('password_change/', views.password_change, name='password_change'),
     path('account_settings/', views.account_settings, name='account_settings'),
-    path('detail/<int:review_id>/like/', views.like, name='like'),
 ]

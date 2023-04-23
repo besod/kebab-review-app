@@ -64,43 +64,12 @@
     </nav>
   </header>
 
-  <div class="container">
-    {% block content %}
-    
-    {% endblock %}
-  </div>
+{% block content %}
 
+{% endblock %}
 <footer>
   <!-- footer here -->
 
 </footer>
-
-
-  {% load static %}
-
-  <script type="text/javascript" src="{% static 'core/js/ajax.js' %}"></script>
-  <script>
-    $(document).ready(function() {
-      $('#like-btn').click(function() {
-        $.ajax({
-          url: '/core/detail/' + {{ review.id }} + '/like/',
-          type: 'POST',
-          data: {
-            'review_id': {{ review.id }},
-            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
-          },
-          dataType: 'json',
-          success: function(response) {
-            $('#like-count').text(response.like_count);
-            $('#like-btn span').text('(' + response.review_like_count + ')');
-          },
-          error: function(xhr, status, error) {
-            console.log(xhr.responseText);
-            alert('Error happened.');
-          }
-        });
-      });
-    });    
-  </script>
 
 </html>

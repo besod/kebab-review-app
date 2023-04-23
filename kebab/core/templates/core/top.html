@@ -5,68 +5,14 @@
 
 
 </head>
-<header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
-  <nav class="flex items-center w-full">
-    <div class="flex justify-between items-center space-x-5">
-      <a href="http://127.0.0.1:8000/core/">
-       
-      </a>
-      <p class="mt-2 text-3xl font-bold italic text-white">
-        Amazing
-        <span
-          class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
-          <span class="relative text-white">kebab</span> </span>!
-      </p>
-    </div>
-    <div class="flex-grow lg:flex lg:items-center lg:w-auto">
-      
-      {% if user.is_authenticated %}
-      <!-- fetch user from database -->
-
-      <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
-        <li>
-          <p class="text-lg font-bold mr-4 text-white hover:bg-">
-            Hello <a class="hover:text-amber-600" href="{% url 'core:profile' username=user.username %} ">{{ user.username }}!</a>
-            </p>
-        </li>
-        <li>
-          <a href="{% url 'core:upload' %}"
-            class="bg-amber-500 rounded-full px-4 py-2 mr-1 text-black font-bold hover:bg-amber-600">Review</a>
-        </li>
-        <li>
-          <span class="text-gray-500 font-bold">|</span></li>
-        <li>
-          <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 mx-2 text-black hover:bg-amber-600">Log Out</a>
-        </li>
-      </ul>
-      {% else %}
-      <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
-        <li>
-          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 font-bold hover:bg-amber-600">Log
-            In</a>
-        </li>
-        <li>
-          <span class="text-gray-500 font-bold">|</span>
-        </li>
-        <li>
-          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-black ml-2 hover:bg-amber-600">Sign
-            Up</a>
-        </li>
-        {% endif %}
-        
-      
-    </div>
-    <span class="text-gray-500 font-bold">|</span>
-    <a href="{% url 'core:contact' %}"
-            class="bg-amber-500 rounded-full px-4 py-2 mx-2 text-black font-bold hover:bg-amber-600">contact</a>
-  </nav>
-</header>
 
 <aside class="w-62 fixed left-0 bottom-0 z-20 h-screen bg-amber-100 p-3 mt-2">
   <div class="pt-36">
-    <form action="{% url 'core:top' %}" method="GET">
+  
+
+    <form action="{% url 'core:top' %}" method="GET" class="pt-6 text-xl">
       {% csrf_token %}
-      <h2 class="font-bold text-lg mb-3">Sort by</h2>
+      <h2 class="font-bold text-lg mb-3">Sort by:</h2>
       <div class="flex flex-col">
         <label for="newest" class="mb-2" style="width: 220px; font-size: 14px;">
           <input type="radio" id="newest" name="sort-by" value="-created_at" class="mr-1">
@@ -93,10 +39,11 @@
           Price(lowest - highest)
         </label>
       </div>
-      <button type="submit" class="bg-amber-300 px-1 rounded-lg border-gray-400 border-2 hover:bg-amber-200 mt-4">
+      <button type="submit" class="bg-amber-500 px-1 rounded-full border-gray-100 border-2 hover:bg-amber-600 mt-4 ">
         Sort
       </button>
     </form>
+    
   </div>
 </aside>
 

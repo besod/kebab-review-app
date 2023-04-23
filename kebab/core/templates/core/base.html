@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,62 +8,84 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-SiLyz7BbyyfBvkzO4XKjXTDJGmJHwE1CZgQIrb4xjJFIB1p4gOrsjzfX4mmLgBbIMilJ+kLLC1eS2Mq3a5K/FQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
-  <header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
-    <nav class="flex items-center w-full">
-      <div class="flex justify-between items-center space-x-5">
-        <a href="http://127.0.0.1:8000/core/">
+<header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
+  <nav class="flex items-center w-full">
+    <div class="flex justify-between items-center space-x-5">
+      <a href="http://127.0.0.1:8000/core/">
 
-        </a>
-        <p class="mt-2 text-3xl font-bold italic text-white">
-          Amazing
-          <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
-            <span class="relative text-white">kebab</span> </span>!
-        </p>
+      </a>
+      <p class="mt-2 text-3xl font-bold italic text-white">
+        Amazing
+        <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
+          <span class="relative text-white">kebab</span> </span>!
+      </p>
+    </div>
+  
+
+   <div class="flex-grow lg:flex lg:items-center lg:w-auto">
+
+      {% if user.is_authenticated %}
+            <!-- fetch user from database -->
+
+      <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
+        <li>
+          <p class="text-lg font-bold mr-4 text-white hover:bg-">
+            Hello <a class="hover:text-amber-600" href="{% url 'core:profile' username=user.username %} ">{{ user.username }}!</a>
+          </p>
+        </li>
+        <li>
+          <a href="{% url 'core:upload' %}" class="bg-amber-500 rounded-full px-4 py-2 mr-1 text-black font-bold hover:bg-amber-600">Review</a>
+        </li>
+        <li>
+          <span class="text-gray-500 font-bold">|</span>
+        </li>
+        <li>
+          <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 mx-2 text-black hover:bg-amber-600">Log Out</a>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
+        <li>
+          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 text-lg font-bold hover:bg-amber-600">Log
+            In</a>
+        </li>
+        <li>
+          <span class="text-gray-500 font-bold">|</span>
+        </li>
+        <li>
+          <a href="{% url 'core:signup' %}" class="bg-amber-500 text-lg font-bold rounded-full px-4 py-2 text-black mr-3 hover:bg-amber-600">Sign
+            Up</a>
+        </li>
+        {% endif %}
+
+
+    </div>
+    <span class="text-gray-500 font-bold">|</span>
+    <a href="{% url 'core:contact' %}" class="bg-amber-500 rounded-full px-4 py-2 mx-2 text-black text-lg font-bold hover:bg-amber-600">Contact</a>
+    <!-- search form  -->
+    <form class="flex items-center ml-4 pl-0" action="{% url 'core:search_results' %}" method="get">
+      <label for="simple-search" class="sr-only">Search</label>
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500" name="q" placeholder="Search" required>
       </div>
-      <div class="flex-grow lg:flex lg:items-center lg:w-auto">
-
-        {% if user.is_authenticated %}
-        <!-- fetch user from database -->
-
-        <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
-          <li>
-            <p class="text-lg font-bold mr-4 text-white hover:bg-">
-              Hello <a class="hover:text-amber-600" href="{% url 'core:profile' username=user.username %} ">{{ user.username }}!</a>
-            </p>
-          </li>
-          <li>
-            <a href="{% url 'core:upload' %}" class="bg-amber-500 rounded-full px-4 py-2 mr-1 text-black font-bold hover:bg-amber-600">Review</a>
-          </li>
-          <li>
-            <span class="text-gray-500 font-bold">|</span>
-          </li>
-          <li>
-            <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 mx-2 text-black hover:bg-amber-600">Log Out</a>
-          </li>
-        </ul>
-        {% else %}
-        <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
-          <li>
-            <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 text-lg font-bold hover:bg-amber-600">Log
-              In</a>
-          </li>
-          <li>
-            <span class="text-gray-500 font-bold">|</span>
-          </li>
-          <li>
-            <a href="{% url 'core:signup' %}" class="bg-amber-500 text-lg font-bold rounded-full px-4 py-2 text-black mr-3 hover:bg-amber-600">Sign
-              Up</a>
-          </li>
-          {% endif %}
-
-
-      </div>
-      <span class="text-gray-500 font-bold">|</span>
-      <a href="{% url 'core:contact' %}" class="bg-amber-500 rounded-full px-4 py-2 mx-2 text-black text-lg font-bold hover:bg-amber-600">Contact</a>
-    </nav>
-  </header>
+      <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-amber-500 rounded-lg border border-amber-500 hover:bg-amber-600 focus:ring-4 focus:outline-none focus:ring-amber-500 dark:bg-amber-600 dark:hover:bg-amber-600 dark:focus:ring-amber-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <span class="sr-only">Search</span>
+      </button>
+    </form>
+  </nav>
+</header>
 
 {% block content %}
 

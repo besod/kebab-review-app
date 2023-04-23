@@ -1,8 +1,8 @@
-# ignore venv files
+# ignore venv files 
 venv/
 
 # ignore database
  kebab/db.sqlite3
-  __pycache__/
+ __pycache__/
  *.py[cod]
- *$py.class
+ *$py.class 

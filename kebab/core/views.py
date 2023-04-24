@@ -5,6 +5,7 @@ from .forms import SignupForm, LogInForm, ContactForm, UploadForm, CommentForm, 
 from .models import Contact, Review, CustomUser, Comment, Menu
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import JsonResponse
 
 
 # def home(request):
@@ -230,6 +231,12 @@ def account_settings(request):
     # Add account settings functionality
     return render(request, 'account/account_settings.html')
 
+
+def like(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    review.like_count +=1
+    review.save()
+    return JsonResponse({"review_like_count": review.like_count})
 
 # When inplement create_review function, use this maybe
 # reviews = Review.objects.filter(restaurant=restaurant)

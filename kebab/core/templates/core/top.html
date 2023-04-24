@@ -2,63 +2,140 @@
 
 <head>
   <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Vf8mRbSJFJZFK6/CbVhPmibq+3mJVjIaDtfkwO5OAM3qee0LpYCrKAjO49qq08Q5J5R5l5Q2f+LPcHpfLd8Bw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-Vf8mRbSJFJZFK6/CbVhPmibq+3mJVjIaDtfkwO5OAM3qee0LpYCrKAjO49qq08Q5J5R5l5Q2f+LPcHpfLd8Bw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </head>
 
+<<<<<<< HEAD
 <aside class="w-62 fixed left-0 bottom-0 z-20 h-screen bg-amber-100 p-3 mt-2">
   <div class="pt-36">
 
 
+=======
+<aside
+  class="sidebar w-62 fixed left-0 bottom-32 z-30 max-h-full bg-amber-100 p-3 mt-2"
+>
+  <div class="pt-80">
+>>>>>>> main
     <form action="{% url 'core:top' %}" method="GET" class="pt-6 text-xl">
       {% csrf_token %}
       <h2 class="font-bold text-lg mb-3">Sort by:</h2>
       <div class="flex flex-col">
-        <label for="newest" class="mb-2" style="width: 220px; font-size: 14px;">
-          <input type="radio" id="newest" name="sort-by" value="-created_at" class="mr-1">
+        <label for="newest" class="mb-2" style="width: 220px; font-size: 14px">
+          <input
+            type="radio"
+            id="newest"
+            name="sort-by"
+            value="-created_at"
+            class="mr-1"
+          />
           Review (newest - oldest)
         </label>
-        <label for="oldest" class="mb-2" style="width: 220px; font-size: 14px;">
-          <input type="radio" id="oldest" name="sort-by" value="created_at" class="mr-1">
+        <label for="oldest" class="mb-2" style="width: 220px; font-size: 14px">
+          <input
+            type="radio"
+            id="oldest"
+            name="sort-by"
+            value="created_at"
+            class="mr-1"
+          />
           Review (oldest - newest)
         </label>
-        <label for="highest-rating" class="mb-2" style="width: 220px; font-size: 14px;">
-          <input type="radio" id="highest-rating" name="sort-by" value="-avg_rating" class="mr-1">
+        <label
+          for="highest-rating"
+          class="mb-2"
+          style="width: 220px; font-size: 14px"
+        >
+          <input
+            type="radio"
+            id="highest-rating"
+            name="sort-by"
+            value="-avg_rating"
+            class="mr-1"
+          />
           Rating (highest - lowest)
         </label>
-        <label for="lowest-rating" class="mb-2" style="width: 220px; font-size: 14px;">
-          <input type="radio" id="lowest-rating" name="sort-by" value="avg_rating" class="mr-1">
+        <label
+          for="lowest-rating"
+          class="mb-2"
+          style="width: 220px; font-size: 14px"
+        >
+          <input
+            type="radio"
+            id="lowest-rating"
+            name="sort-by"
+            value="avg_rating"
+            class="mr-1"
+          />
           Rating (lowest - highest)
         </label>
-        <label for="highest-price" class="mb-2" style="width: 220px; font-size: 14px;">
-          <input type="radio" id="highest-price" name="sort-by" value="-menu__price" class="mr-1">
+        <label
+          for="highest-price"
+          class="mb-2"
+          style="width: 220px; font-size: 14px"
+        >
+          <input
+            type="radio"
+            id="highest-price"
+            name="sort-by"
+            value="-menu__price"
+            class="mr-1"
+          />
           Price (highest - lowest)
         </label>
-        <label for="lowest-price" class="mb-2" style="width: 220px; font-size: 14px;">
-          <input type="radio" id="lowest-price" name="sort-by" value="menu__price" class="mr-1">
+        <label
+          for="lowest-price"
+          class="mb-2"
+          style="width: 220px; font-size: 14px"
+        >
+          <input
+            type="radio"
+            id="lowest-price"
+            name="sort-by"
+            value="menu__price"
+            class="mr-1"
+          />
           Price(lowest - highest)
         </label>
       </div>
-      <button type="submit" class="bg-amber-500 px-1 rounded-full border-gray-100 border-2 hover:bg-amber-600 mt-4 ">
+      <button
+        type="submit"
+        class="bg-amber-500 px-1 rounded-full border-gray-100 border-2 hover:bg-amber-600 mt-4"
+      >
         Sort
       </button>
     </form>
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
   </div>
 </aside>
 
-
 <main class="flex-1 ml-56 pt-28">
   <div class="flex-1 ml-10 mx-auto w-6/6 pt-5">
-    <section class="flex flex-row items-center justify-between py-10 ">
+    <section class="flex flex-row items-center justify-between py-10">
       <div class="w-2/6 pl-5">
-        <h2 class="text-4xl font-bold mb-4">"Satisfy your Kebab Cravings with Reviews from the Best Kebab Joints in Town!"</h2>
-        <p class="text-lg mb-8">Discover the best kebab joints in town with our comprehensive kebab review site. From juicy lamb to crispy falafel, our reviews will satisfy your kebab cravings and help you find your new go-to spot.</p>
+        <h2 class="text-4xl font-bold mb-4">
+          "Satisfy your Kebab Cravings with Reviews from the Best Kebab Joints
+          in Town!"
+        </h2>
+        <p class="text-lg mb-8">
+          Discover the best kebab joints in town with our comprehensive kebab
+          review site. From juicy lamb to crispy falafel, our reviews will
+          satisfy your kebab cravings and help you find your new go-to spot.
+        </p>
       </div>
       <div class="w-3/6 px-5 mx-0 py-4">
         <h1 class="text-4xl italic font-bold mb-4">
-          <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
+          <span
+            class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2"
+          >
             <span class="relative text-white p-1">Best Deal</span>
           </span>
         </h1>
@@ -67,21 +144,34 @@
             <div class="relative overflow-hidden" style="padding-bottom: 60%">
               {% if best.image %}
               <div class="absolute inset-0">
-                <img class="object-cover h-full w-full" src="{{ best.image.url }}" alt="{{ best.menu.menu }} image" />
+                <img
+                  class="object-cover h-full w-full"
+                  src="{{ best.image.url }}"
+                  alt="{{ best.menu.menu }} image"
+                />
               </div>
               {% endif %}
-              <div class="absolute bottom-0 left-0 w-full text-white p-4 bg-black bg-opacity-50">
+              <div
+                class="absolute bottom-0 left-0 w-full text-white p-4 bg-black bg-opacity-50"
+              >
                 <h1 class="text-2xl font-bold">{{ best.menu.menu }}</h1>
+<<<<<<< HEAD
                 <p class="text-lg"> By: {{ best.user.username }} </p>
                 <p class="text-sm"> {{ best.created_at|date:"Y-m-d" }}</p>
+=======
+                <p class="text-lg">By: {{ best.user.username }}</p>
+                <p class="text-sm">{{ best.created_at|date:"Y-m-d" }}</p>
+>>>>>>> main
                 <ul class="text-sm font-bold mt-4">
                   <li>Restaurant: {{ best.restaurant.name }}</li>
                   <li>Price: SEK {{ best.menu.price }}</li>
                   <li>Like count: {{ best.like_count }}</li>
-                  <h2 class="text-lg font-bold text-pink-600 mt-4">
+                  <h2 class="text-3xl font-bold text-pink-600 mt-4">
                     <span>
-                      <i style="font-size:24px; color:yellow;" class="fa">&#9733;</i>
-                      Rating: {{ review.avg_rating }}
+                      <i style="font-size: 24px; color: yellow" class="fa"
+                        >&#9733;</i
+                      >
+                      Rating: {{ best.avg_rating }}
                     </span>
                   </h2>
                 </ul>
@@ -97,8 +187,16 @@
 <!-- Reviews -->
   <div class="mx-10 mt-28">
     <h1 class="text-4xl italic font-bold mb-4">
+<<<<<<< HEAD
       <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
         <span class="relative text-white p-1">Reviews</span></span>
+=======
+      <span
+        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2"
+      >
+        <span class="relative text-white p-1">Reviews</span></span
+      >
+>>>>>>> main
     </h1>
 
 <!-- cards -->
@@ -109,7 +207,11 @@
         {% if review.image %}
         <div class="relative overflow-hidden" style="padding-bottom: 56.25%">
           <div class="absolute inset-0">
-            <img class="object-cover h-full w-full" src="{{ review.image.url }}" alt="{{ review.menu.menu }} image" />
+            <img
+              class="object-cover h-full w-full"
+              src="{{ review.image.url }}"
+              alt="{{ review.menu.menu }} image"
+            />
           </div>
         </div>
         {% endif %}
@@ -132,7 +234,9 @@
           <p class="text-gray-500 text-sm">
             Restaurant: {{ review.restaurant.name }}
           </p>
-          <div class="text-gray-600 bg-green-300/80 mx-20 text-center rounded py-1 mt-5 hover:bg-yellow-300">
+          <div
+            class="text-gray-600 bg-green-300/80 mx-20 text-center rounded py-1 mt-5 hover:bg-yellow-300"
+          >
             <a href="{% url 'core:detail' id=review.id %}">Detail</a>
           </div>
         </div>
@@ -141,6 +245,7 @@
     </div>
 
   </div>
+<<<<<<< HEAD
   </section>
   
 <!-- about -->
@@ -148,8 +253,20 @@
     <h1 class="text-4xl italic font-bold mb-4 mx-10">
       <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
         <span class="relative text-white p-1">About</span></span>
+=======
+  <div class="mt-28">
+    <h1 class="text-4xl italic font-bold mb-4 mx-10">
+      <span
+        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2"
+      >
+        <span class="relative text-white p-1">About</span></span
+      >
+>>>>>>> main
     </h1>
-    <div id="about" class="p-10 bg-yellow-50/90 rounded-lg shadow-lg mx-10 mb-5">
+    <div
+      id="about"
+      class="p-10 bg-yellow-50/90 rounded-lg shadow-lg mx-10 mb-5"
+    >
       <p class="text-lg mb-2 font-medium">
         This website is a review website focused on kebabs. <br />
         This mainly provide you with menu prices, reviews, restaurant

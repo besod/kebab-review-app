@@ -11,17 +11,10 @@
   />
 </head>
 
-<<<<<<< HEAD
-<aside class="w-62 fixed left-0 bottom-0 z-20 h-screen bg-amber-100 p-3 mt-2">
-  <div class="pt-36">
-
-
-=======
 <aside
   class="sidebar w-62 fixed left-0 bottom-32 z-30 max-h-full bg-amber-100 p-3 mt-2"
 >
   <div class="pt-80">
->>>>>>> main
     <form action="{% url 'core:top' %}" method="GET" class="pt-6 text-xl">
       {% csrf_token %}
       <h2 class="font-bold text-lg mb-3">Sort by:</h2>
@@ -110,10 +103,6 @@
         Sort
       </button>
     </form>
-<<<<<<< HEAD
-
-=======
->>>>>>> main
   </div>
 </aside>
 
@@ -155,13 +144,8 @@
                 class="absolute bottom-0 left-0 w-full text-white p-4 bg-black bg-opacity-50"
               >
                 <h1 class="text-2xl font-bold">{{ best.menu.menu }}</h1>
-<<<<<<< HEAD
-                <p class="text-lg"> By: {{ best.user.username }} </p>
-                <p class="text-sm"> {{ best.created_at|date:"Y-m-d" }}</p>
-=======
                 <p class="text-lg">By: {{ best.user.username }}</p>
                 <p class="text-sm">{{ best.created_at|date:"Y-m-d" }}</p>
->>>>>>> main
                 <ul class="text-sm font-bold mt-4">
                   <li>Restaurant: {{ best.restaurant.name }}</li>
                   <li>Price: SEK {{ best.menu.price }}</li>
@@ -183,23 +167,17 @@
     </section>
   </div>
 
-
-<!-- Reviews -->
+  <!-- Reviews -->
   <div class="mx-10 mt-28">
     <h1 class="text-4xl italic font-bold mb-4">
-<<<<<<< HEAD
-      <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
-        <span class="relative text-white p-1">Reviews</span></span>
-=======
       <span
         class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2"
       >
         <span class="relative text-white p-1">Reviews</span></span
       >
->>>>>>> main
     </h1>
 
-<!-- cards -->
+    <!-- cards -->
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {% for review in reviews %}
@@ -243,17 +221,7 @@
       </div>
       {% endfor %}
     </div>
-
   </div>
-<<<<<<< HEAD
-  </section>
-  
-<!-- about -->
-  <div class="mt-28">
-    <h1 class="text-4xl italic font-bold mb-4 mx-10">
-      <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
-        <span class="relative text-white p-1">About</span></span>
-=======
   <div class="mt-28">
     <h1 class="text-4xl italic font-bold mb-4 mx-10">
       <span
@@ -261,7 +229,6 @@
       >
         <span class="relative text-white p-1">About</span></span
       >
->>>>>>> main
     </h1>
     <div
       id="about"

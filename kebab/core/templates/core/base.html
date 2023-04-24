@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +10,12 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-  <header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
+<body class="flex flex-col min-h-screen">
+  <header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-40">
     <nav class="flex items-center w-full">
       <div class="flex justify-between items-center space-x-5">
         <a href="http://127.0.0.1:8000/core/">
-
+          <img src=" {% static 'core/icons8-shawarma-60.png' %}" alt="kebab">
         </a>
         <p class="mt-2 text-3xl font-bold italic text-white">
           Amazing
@@ -22,10 +24,8 @@
         </p>
       </div>
       <div class="flex-grow lg:flex lg:items-center lg:w-auto">
-
         {% if user.is_authenticated %}
         <!-- fetch user from database -->
-
         <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
           <li>
             <p class="text-lg font-bold mr-4 text-white hover:bg-">
@@ -56,51 +56,72 @@
               Up</a>
           </li>
           {% endif %}
-
-
       </div>
       <span class="text-gray-500 font-bold">|</span>
       <a href="{% url 'core:contact' %}" class="bg-amber-500 rounded-full px-4 py-2 mx-2 text-black text-lg font-bold hover:bg-amber-600">Contact</a>
     </nav>
   </header>
-
-  <div class="container">
+  <div class="flex-grow container mx-auto">
     {% block content %}
-    
+  
     {% endblock %}
   </div>
+  <footer class="bg-black text-white pt-9 pb-8 px-10">
+    <div class="container mx-auto flex justify-between">
+      <div class="flex items-center">
+        <a href="http://127.0.0.1:8000/core/"><img src="{% static 'core/icons8-shawarma-60.png' %}" alt="kebab"></a>
+        <a href="{% url 'core:top' %}" class="mr-8 hover:text-gray-400 ml-3">Home</a>
+        <a href="{% url 'core:top' %}#about" class="mr-8 hover:text-gray-400">About</a>
+        <a href="{% url 'core:contact' %}" class="hover:text-gray-400">Contact</a>
+        <div class="ml-8 flex items-center">
+          <a href="#" class="text-3xl hover:text-gray-400">
+            <img src="{% static 'core/icons8-twitter-squared-48.png' %}" alt="twitter">
+          </a>
+          <a href="#" class="text-3xl ml-4 hover:text-gray-400">
+            <img src="{% static 'core/icons8-facebook-48.png' %}" alt="facebook">
+          </a>
+          <a href="#" class="text-3xl ml-4 hover:text-gray-400">
+            <img src="{% static 'core/icons8-instagram-48.png' %}" alt="instagram">
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <a href="{% url 'core:login' %}"
+          class="mr-8 bg-white text-black py-2 px-4 rounded-full hover:bg-gray-300 hover:text-gray-800 transition-colors duration-300">
+          Login</a>
+        <a href="{% url 'core:signup' %}"
+          class="bg-white text-black py-2 px-4 rounded-full hover:bg-gray-300 hover:text-gray-800 transition-colors duration-300">
+          Sign up</a>
+      </div>
+    </div>
+  </footer>
+</body>
 
-<footer>
-  <!-- footer here -->
-
-</footer>
 
 
-  {% load static %}
-
-  <script type="text/javascript" src="{% static 'core/js/ajax.js' %}"></script>
-  <script>
-    $(document).ready(function() {
-      $('#like-btn').click(function() {
-        $.ajax({
-          url: '/core/detail/' + {{ review.id }} + '/like/',
-          type: 'POST',
-          data: {
-            'review_id': {{ review.id }},
-            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
-          },
-          dataType: 'json',
-          success: function(response) {
-            $('#like-count').text(response.like_count);
-            $('#like-btn span').text('(' + response.review_like_count + ')');
-          },
-          error: function(xhr, status, error) {
-            console.log(xhr.responseText);
-            alert('Error happened.');
-          }
-        });
+<script type="text/javascript" src="{% static 'core/js/ajax.js' %}"></script>
+<script>
+  $(document).ready(function() {
+    $('#like-btn').click(function() {
+      $.ajax({
+        url: '/core/detail/' + {{ review.id }} + '/like/',
+        type: 'POST',
+        data: {
+          'review_id': {{ review.id }},
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        },
+        dataType: 'json',
+        success: function(response) {
+          $('#like-count').text(response.like_count);
+          $('#like-btn span').text('(' + response.review_like_count + ')');
+        },
+        error: function(xhr, status, error) {
+          console.log(xhr.responseText);
+          alert('Error happened.');
+        }
       });
-    });    
-  </script>
+    });
+  });    
+</script>
 
 </html>

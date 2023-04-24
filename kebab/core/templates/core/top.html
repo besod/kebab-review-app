@@ -1,69 +1,8 @@
 {% extends 'core/base.html' %} {% block content %} {% load static %}
-<head>
-  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Vf8mRbSJFJZFK6/CbVhPmibq+3mJVjIaDtfkwO5OAM3qee0LpYCrKAjO49qq08Q5J5R5l5Q2f+LPcHpfLd8Bw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-</head>
-<header id="home" class="flex bg-neutral-950 py-6 px-16 fixed top-0 left-0 right-0 z-50">
-  <nav class="flex items-center w-full">
-    <div class="flex justify-between items-center space-x-5">
-      <a href="http://127.0.0.1:8000/core/">
-       
-      </a>
-      <p class="mt-2 text-3xl font-bold italic text-white">
-        Amazing
-        <span
-          class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-amber-500 relative inline-block mx-2">
-          <span class="relative text-white">kebab</span> </span>!
-      </p>
-    </div>
-    <div class="flex-grow lg:flex lg:items-center lg:w-auto">
-      
-      {% if user.is_authenticated %}
-      <!-- fetch user from database -->
-
-      <ul class="w-full justify-end flex-grow lg:flex lg:items-center lg:w-auto ml-auto">
-        <li>
-          <p class="text-lg font-bold mr-4 text-white hover:bg-">
-            Hello <a class="hover:text-amber-600" href="{% url 'core:profile' username=user.username %} ">{{ user.username }}!</a>
-            </p>
-        </li>
-        <li>
-          <a href="{% url 'core:upload' %}"
-            class="bg-amber-500 rounded-full px-4 py-2 mr-1 text-black font-bold hover:bg-amber-600">Review</a>
-        </li>
-        <li>
-          <span class="text-gray-500 font-bold">|</span></li>
-        <li>
-          <a href="{% url 'core:logout' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 mx-2 text-black hover:bg-amber-600">Log Out</a>
-        </li>
-      </ul>
-      {% else %}
-      <ul class="flex flex-row space-x-4 text-lg text-gray-600 ml-auto">
-        <li>
-          <a href="{% url 'core:login' %}" class="bg-amber-500 rounded-full px-4 py-2 text-black mr-2 font-bold hover:bg-amber-600">Log
-            In</a>
-        </li>
-        <li>
-          <span class="text-gray-500 font-bold">|</span>
-        </li>
-        <li>
-          <a href="{% url 'core:signup' %}" class="bg-amber-500 font-bold rounded-full px-4 py-2 text-black ml-2 hover:bg-amber-600">Sign
-            Up</a>
-        </li>
-        {% endif %}
-        
-      
-    </div>
-    <span class="text-gray-500 font-bold">|</span>
-    <a href="{% url 'core:contact' %}"
-            class="bg-amber-500 rounded-full px-4 py-2 mx-2 text-black font-bold hover:bg-amber-600">contact</a>
-  </nav>
-</header>
-
-<aside class="w-62 fixed left-0 bottom-0 z-20 h-screen bg-amber-100 p-3 mt-2">
-  <div class="pt-36">
+<aside class="sidebar w-62 fixed left-0 bottom-32 z-30 h-full bg-amber-100 p-3 mt-2">
+  <div class="pt-80">
     <form action="{% url 'core:top' %}" method="GET">
       {% csrf_token %}
       <h2 class="font-bold text-lg mb-3">Sort by</h2>
@@ -100,10 +39,9 @@
   </div>
 </aside>
 
-
 <main class="flex-1 ml-56 pt-28">
   <div class="flex-1 ml-10 mx-auto w-6/6 pt-5">
-    <section class="flex flex-row items-center justify-between py-10 ">
+    <section class="flex flex-row items-center justify-between py-10">
       <div class="w-2/6 pl-5">
         <h2 class="text-4xl font-bold mb-4">"Satisfy your Kebab Cravings with Reviews from the Best Kebab Joints in Town!"</h2>
         <p class="text-lg mb-8">Discover the best kebab joints in town with our comprehensive kebab review site. From juicy lamb to crispy falafel, our reviews will satisfy your kebab cravings and help you find your new go-to spot.</p>
@@ -129,10 +67,10 @@
                   <li>Restaurant: {{ best.restaurant.name }}</li>
                   <li>Price: SEK {{ best.menu.price }}</li>
                   <li>Like count: {{ best.like_count }}</li>
-                  <h2 class="text-lg font-bold text-pink-600 mt-4">
+                  <h2 class="text-3xl font-bold text-pink-600 mt-4">
                     <span>
                       <i style="font-size:24px; color:yellow;" class="fa">&#9733;</i>
-                      Rating: {{ review.avg_rating }}
+                      Rating: {{ best.avg_rating }}
                     </span>
                   </h2>
                 </ul>
@@ -141,9 +79,6 @@
           </div>
         </a>
       </div>
-    </section>
-    <section>
-     
     </section>
   </div>
 
@@ -190,7 +125,6 @@
       {% endfor %}
     </div>
   </div>
-  </section>
   <div class="mt-28">
     <h1 class="text-4xl italic font-bold mb-4 mx-10">
       <span

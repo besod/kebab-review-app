@@ -20,7 +20,7 @@ def top(request):
 
     reviews = Review.objects.all()
     best = Review.objects.order_by(
-        'menu__price', '-avg_rating', '-like_count', '-created_at').first()
+        '-avg_rating', 'menu__price', '-like_count', '-created_at').first()
     # Get distinct restaurant names
     restaurants = Review.objects.order_by().values_list(
         'restaurant__name', flat=True).distinct()

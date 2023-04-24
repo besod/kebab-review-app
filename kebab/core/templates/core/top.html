@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %} {% block content %} {% load static %}
+
 <head>
   <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Vf8mRbSJFJZFK6/CbVhPmibq+3mJVjIaDtfkwO5OAM3qee0LpYCrKAjO49qq08Q5J5R5l5Q2f+LPcHpfLd8Bw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -8,7 +9,7 @@
 
 <aside class="w-62 fixed left-0 bottom-0 z-20 h-screen bg-amber-100 p-3 mt-2">
   <div class="pt-36">
-  
+
 
     <form action="{% url 'core:top' %}" method="GET" class="pt-6 text-xl">
       {% csrf_token %}
@@ -43,7 +44,7 @@
         Sort
       </button>
     </form>
-    
+
   </div>
 </aside>
 
@@ -71,7 +72,8 @@
               {% endif %}
               <div class="absolute bottom-0 left-0 w-full text-white p-4 bg-black bg-opacity-50">
                 <h1 class="text-2xl font-bold">{{ best.menu.menu }}</h1>
-                <p class="text-lg"> By: {{ best.user.username }} </p> <p class="text-sm"> {{ best.created_at|date:"Y-m-d" }}</p>
+                <p class="text-lg"> By: {{ best.user.username }} </p>
+                <p class="text-sm"> {{ best.created_at|date:"Y-m-d" }}</p>
                 <ul class="text-sm font-bold mt-4">
                   <li>Restaurant: {{ best.restaurant.name }}</li>
                   <li>Price: SEK {{ best.menu.price }}</li>
@@ -89,17 +91,18 @@
         </a>
       </div>
     </section>
-    <section>
-     
-    </section>
   </div>
 
+
+<!-- Reviews -->
   <div class="mx-10 mt-28">
     <h1 class="text-4xl italic font-bold mb-4">
-      <span
-        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
+      <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
         <span class="relative text-white p-1">Reviews</span></span>
     </h1>
+
+<!-- cards -->
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {% for review in reviews %}
       <div class="bg-yellow-50/90 rounded-lg shadow-lg overflow-hidden">
@@ -136,12 +139,14 @@
       </div>
       {% endfor %}
     </div>
+
   </div>
   </section>
+  
+<!-- about -->
   <div class="mt-28">
     <h1 class="text-4xl italic font-bold mb-4 mx-10">
-      <span
-        class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
+      <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block mx-2">
         <span class="relative text-white p-1">About</span></span>
     </h1>
     <div id="about" class="p-10 bg-yellow-50/90 rounded-lg shadow-lg mx-10 mb-5">

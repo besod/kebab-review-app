@@ -3,7 +3,7 @@
 
 <main class="flex-1 mx-16 pt-32">
 
-  <section class="bg-amber-500 rounded-lg shadow-lg overflow-hidden mb-5">
+  <section class="bg-amber-600 rounded-lg shadow-lg overflow-hidden mb-5">
 
     <div class="card">
       <div class="flex items-center justify-center">
@@ -67,7 +67,7 @@
               <p class="mb-10">
                 <span class="text-xl font-bold text-pink-500">
                   <i class="text-yellow-300 text-2xl fas fa-star">&#9733;</i>
-                  <span class="text-4xl font-bold text-pink-500">
+                  <span class="text-3xl font-bold text-pink-500">
                     &nbsp;{{ review.avg_rating }}
                   </span>
                 </span>
@@ -79,8 +79,8 @@
                 <p>
                   <span class="text-xl font-bold text-pink-500">
                     <i class="text-yellow-300 text-2xl fas fa-star">&#9733;</i>
-                    <span class="text-4xl font-bold text-pink-500">
-                      &nbsp;{{ viewer_rating }}
+                    <span class="text-3xl font-bold text-pink-500">
+                      &nbsp;{{ review.avg_rating }}
                     </span>
                   </span>
                 </p>
@@ -144,7 +144,7 @@
             <span class="ml-2">
               <i class="text-yellow-400 text-2xl fas fa-star">&#9733;</i>
               <span class="text-3xl font-bold text-pink-500">
-                {{ c.avg_rating }}</span>
+                {{ review.avg_rating }}</span>
             </span>
           </p>
           <p class="text-xs font-normal text-gray-500 mb-2">
@@ -161,5 +161,6 @@
   </section>
 
 </main>
+
 
 {% endblock content %}

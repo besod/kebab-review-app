@@ -4,7 +4,8 @@ from django.urls import reverse
 from .forms import SignupForm, LogInForm, ContactForm, UploadForm, CommentForm, ReviewForm
 from .models import Contact, Review, CustomUser, Comment, Menu
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, JsonResponse, HttpResponseBadRequest
+from django.db.models import Q
+
 
 # def home(request):
 # context = {}
@@ -54,14 +55,6 @@ def top(request):
 def detail(request, id):
     target_review = get_object_or_404(Review, id=id)
     comments = Comment.objects.filter(review=target_review)
-    if comments:
-        total = 0
-        for comment in comments.values():
-            total += comment['avg_rating']
-        viewer_avg_rating = round(total/comments.count(), 1)
-    else:
-        viewer_avg_rating = 'Nothing'
-
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -71,12 +64,10 @@ def detail(request, id):
             return redirect('core:detail', id=id)
     else:
         form = CommentForm()
-
     context = {
         'review': target_review,
         'comment_form': form,
-        'comments': comments,
-        'viewer_rating': viewer_avg_rating
+        'comments': comments
     }
     return render(request, 'core/detail.html', context)
 
@@ -197,6 +188,37 @@ def edit_review(request, id):
     return render(request, 'account/edit_review.html', {'form': form})
 
 
+def search_results(request):
+    query = request.GET.get('q')
+    restaurant_name = request.GET.get('restaurant')
+    menu_name = request.GET.get('menu')
+    reviewer_name = request.GET.get('reviewer')
+
+    reviews = Review.objects.all()
+
+    if query:
+        reviews = reviews.filter(
+            Q(restaurant__name__icontains=query) |
+            Q(menu__menu__icontains=query) |
+            Q(review__icontains=query) |
+            Q(user__username__icontains=query)
+        )
+
+    if restaurant_name:
+        reviews = reviews.filter(restaurant__name=restaurant_name)
+    elif menu_name:
+        reviews = reviews.filter(menu__menu=menu_name)
+    elif reviewer_name:
+        reviews = reviews.filter(user__username=reviewer_name)
+
+    context = {
+        'query': query,
+        'reviews': reviews,
+    }
+
+    return render(request, 'core/search_results.html', context)
+
+
 @login_required
 def password_change(request):
     # add password change functionality
@@ -207,15 +229,6 @@ def password_change(request):
 def account_settings(request):
     # Add account settings functionality
     return render(request, 'account/account_settings.html')
-
-
-def like(request, review_id):
-    review = get_object_or_404(Review, id=review_id)
-    review.like_count +=1
-    review.save()
-    return JsonResponse({"review_like_count": review.like_count})
-
-
 
 
 # When inplement create_review function, use this maybe

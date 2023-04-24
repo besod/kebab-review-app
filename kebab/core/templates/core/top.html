@@ -1,11 +1,15 @@
 {% extends 'core/base.html' %} {% block content %} {% load static %}
+<head>
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Vf8mRbSJFJZFK6/CbVhPmibq+3mJVjIaDtfkwO5OAM3qee0LpYCrKAjO49qq08Q5J5R5l5Q2f+LPcHpfLd8Bw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
 
 <aside class="sidebar w-62 fixed left-0 bottom-32 z-30 h-full bg-amber-100 p-3 mt-2">
-  <div class="pt-80">
-    <form action="{% url 'core:top' %}" method="GET">
+  <div class="pt-80">    
+    <form action="{% url 'core:top' %}" method="GET" class="pt-6 text-xl">
       {% csrf_token %}
-      <h2 class="font-bold text-lg mb-3">Sort by</h2>
+      <h2 class="font-bold text-lg mb-3">Sort by:</h2>
       <div class="flex flex-col">
         <label for="newest" class="mb-2" style="width: 220px; font-size: 14px;">
           <input type="radio" id="newest" name="sort-by" value="-created_at" class="mr-1">
@@ -32,10 +36,11 @@
           Price(lowest - highest)
         </label>
       </div>
-      <button type="submit" class="bg-amber-300 px-1 rounded-lg border-gray-400 border-2 hover:bg-amber-200 mt-4">
+      <button type="submit" class="bg-amber-500 px-1 rounded-full border-gray-100 border-2 hover:bg-amber-600 mt-4 ">
         Sort
       </button>
     </form>
+    
   </div>
 </aside>
 

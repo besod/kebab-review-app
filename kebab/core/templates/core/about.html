@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %} {% block content %} {% load static %}
+
+
+<div class="mt-48 p-5">
+  <h2 class="text-5xl font-bold mb-20 text-center italic">"Hi, we're Amazing Kebab!"</h2>
+  <div class="flex flex-col md:flex-row mx-auto w-full mt-12 mb-40 text-center md:text-left">
+    <div class="w-full md:w-1/2 flex-shrink-0 mx-auto md:mx-0 md:mr-10 shadow-lg">
+      <img src="{% static 'core/2854507.jpg' %}" alt="kebab" class="w-full h-full object-cover">
+    </div>
+    <div class="w-full md:w-1/2 py-10">
+      <p class="text-lg mb-8">
+        If you're a kebab enthusiast, you've come to the right place! Our website is dedicated to providing you with the most comprehensive reviews of kebab restaurants in town. By creating an account with us, you'll gain access to a wealth of information about menus, prices, and restaurant details that you need to make the best choices for your taste buds.
+      </p>
+      <div class="bg-gray-100 rounded-lg px-6 py-4 mb-8">
+        <p class="font-bold text-lg mt-2 mb-1">What Makes Us Special</p>
+        <ul class="list-disc pl-6">
+          <li class="mb-4">
+            <span class="font-bold">Menu and Price Information:</span> We provide you with the latest menu prices and the best deals, so you can enjoy your kebab experience without breaking the bank.
+          </li>
+          <li class="mb-4">
+            <span class="font-bold">Unbiased Reviews:</span> Our users can leave honest reviews of their kebab experiences, giving you a reliable and unbiased source of information to help you make your decision.
+          </li>
+          <li>
+            <span class="font-bold">Personalized Experience:</span> Create an account with us to keep track of your reviews, so you can always have the best kebab experience possible.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

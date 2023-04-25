@@ -5,6 +5,7 @@ from .forms import SignupForm, LogInForm, ContactForm, UploadForm, CommentForm, 
 from .models import Contact, Review, CustomUser, Comment, Menu
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import JsonResponse
 
 
 # def home(request):
@@ -55,6 +56,14 @@ def top(request):
 def detail(request, id):
     target_review = get_object_or_404(Review, id=id)
     comments = Comment.objects.filter(review=target_review)
+    if comments:
+        total = 0
+        for comment in comments.values():
+            total += comment['avg_rating']
+        viewer_avg_rating = round(total/comments.count(), 1)
+    else:
+        viewer_avg_rating = 'Not yet'
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -64,10 +73,12 @@ def detail(request, id):
             return redirect('core:detail', id=id)
     else:
         form = CommentForm()
+
     context = {
         'review': target_review,
         'comment_form': form,
-        'comments': comments
+        'comments': comments,
+        'viewer_rating': viewer_avg_rating
     }
     return render(request, 'core/detail.html', context)
 
@@ -230,6 +241,16 @@ def account_settings(request):
     # Add account settings functionality
     return render(request, 'account/account_settings.html')
 
+
+def like(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    review.like_count +=1
+    review.save()
+    return JsonResponse({"review_like_count": review.like_count})
+
+
+def about(request):
+    return render(request, 'core/about.html')
 
 # When inplement create_review function, use this maybe
 # reviews = Review.objects.filter(restaurant=restaurant)

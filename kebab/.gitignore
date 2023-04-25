@@ -3,5 +3,4 @@
  __pycache__/
  *.py[cod]
  *$py.class
-kebab/db.sqlite3
-
+db.sqlite3

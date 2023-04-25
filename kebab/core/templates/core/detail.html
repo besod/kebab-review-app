@@ -11,7 +11,7 @@
       </h1>
       <button id="like-btn" type="button"
         class="bg-white text-2xl rounded-3xl text-black font-bold py-2 px-3 hover:text-white hover:bg-pink-500 flex items-center justify-center ml-4">
-        <img src="{% static 'core/icon-favorite.png' %}" alt="heart" class="mr-2">
+        <img src="{% static 'core/icon-favorite.png' %}" alt="heart" class="mr-2 h-12 w-12">
         <span><span id="like-count" class="text-2xl">({{ review.like_count }})</span></span>
       </button>
     </div>  
@@ -48,7 +48,7 @@
             </li>
           </ul>
         </div>
-        <ul class="text-lg font-bold">
+        <ul class="text-lg font-bold p-1">
           <li class="flex mb-3 items-center">
             <div class="mr-3">
               <img src="https://img.icons8.com/fluency-systems-filled/48/null/restaurant-building.png"  class="w-7 h-7">            </div>
@@ -64,7 +64,7 @@
                 <span class="font-semibold">{{ review.review }}</span>
               </div>
             </li>
-            <li class="text-gray-600 text-sm font-normal mb-2">
+            <li class="text-gray-600 text-sm font-normal mb-2 pl-8">
               {{ review.created_at|date:"Y-m-d" }} posted
             </li>
         </ul>
@@ -125,8 +125,9 @@
               <div class="flex items-center">
                 {{ radio }}
               </div>
-              {% endfor %}
+              {% endfor %} 
             </div>
+            {{ comment_form.avg_rating }}
             <button type="submit" class="bg-amber-900 text-white font-bold py-1 rounded-lg text-2xl mt-6">
               Submit
             </button>

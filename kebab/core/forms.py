@@ -264,8 +264,8 @@ class CommentForm(forms.ModelForm):
         }))
     avg_rating = forms.ChoiceField(
         choices=SERVICE_CHOICES,
-        widget=forms.RadioSelect(attrs={'class': 'form-radio mt-4'
-                                        }))
+        widget=forms.Select(attrs={'class': 'form-select mt-4'
+                                   }))
     comment = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': 'border-2 border-gray-400 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-900 bg-amber-50',

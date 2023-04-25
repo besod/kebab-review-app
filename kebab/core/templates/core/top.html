@@ -55,7 +55,7 @@
         </h3>
         <p class="text-lg mb-8">
           From juicy lamb to crispy falafel, discover the best kebab joints in town with comprehensive kebab
-          review. Share your teste and experience with others and help find the new go-to spot. <a href="#">This is how it works...</a> 
+          review. Share your teste and experience with others and help find the new go-to spot. <a href="{% url 'core:about' %}"><strong class="text-amber-700"> This is how it works...</strong></a> 
         </p>
       </div>
       <div class="w-3/6 px-5 mx-0 py-4">
@@ -141,7 +141,7 @@
     </h1>
 
     <!-- cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 reviews">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 reviews ">
       {% for review in reviews %}
       <a href="{% url 'core:detail' id=review.id %}">
       <div class="review bg-slate-50 rounded-lg shadow-lg overflow-hidden">
@@ -183,7 +183,7 @@
     </div></a>
 
     
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center mb-12">
       <!-- Help text -->
       <span class="text-lg text-gray-700 dark:text-gray-400 pt-6">
         <span class="start-index font-semibold text-gray-900 dark:text-white"></span>

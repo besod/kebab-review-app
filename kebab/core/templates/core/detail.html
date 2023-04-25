@@ -1,7 +1,5 @@
 {% extends 'core/base.html' %} {% block content %} {% load static %}
 
-
-
 <main class="flex-1 mx-16 pt-32">
   <section class="container mx-auto max-w-7xl px-4 pb-1">
     <div class="flex items-center justify-center">
@@ -9,23 +7,19 @@
         {{ review.user.username }}'s Review
         <span class="text-4xl ml-2">on "{{ review.menu.menu }}"</span>
       </h1>
-      <button id="like-btn" type="button"
-        class="bg-white text-2xl rounded-3xl text-black font-bold py-2 px-3 hover:text-white hover:bg-pink-500 flex items-center justify-center ml-4">
-        <img src="{% static 'core/icon-favorite.png' %}" alt="heart" class="mr-2">
+      <button id="like-btn" type="button" class="bg-white text-2xl rounded-3xl text-black font-bold py-2 px-3 hover:text-white hover:bg-pink-500 flex items-center justify-center ml-4">
+        <img src="{% static 'core/icon-favorite.png' %}" alt="heart" class="mr-2" />
         <span><span id="like-count" class="text-2xl">({{ review.like_count }})</span></span>
       </button>
-    </div>  
+    </div>
     <div class="flex justify-center my-4">
       <div class="w-1/3 rounded-lg overflow-hidden shadow-xl">
         {% if review.image %}
-          <div class="relative overflow-hidden w-full h-80 rounded-t-lg">
-            <div class="absolute inset-0">
-              <img class="w-full h-full object-cover object-center"
-                src="{{ review.image.url }}"
-                alt="{{ review.menu.menu }} image"
-              />
-            </div>
+        <div class="relative overflow-hidden w-full h-80 rounded-t-lg">
+          <div class="absolute inset-0">
+            <img class="w-full h-full object-cover object-center" src="{{ review.image.url }}" alt="{{ review.menu.menu }} image" />
           </div>
+        </div>
         {% endif %}
       </div>
       <div class="w-1/3 bg-slate-50 rounded-lg overflow-hidden shadow-xl mx-1">
@@ -35,15 +29,15 @@
           </p>
           <ul class="flex text-xl justify-center">
             <li class="mr-5">
-              <img src="{% static 'core/icons8-savouring-delicious-food-face-32.png' %}" alt="taste" class="pr-1 w-7 h-7"> 
+              <img src="{% static 'core/icons8-savouring-delicious-food-face-32.png' %}" alt="taste" class="pr-1 w-7 h-7" />
               {{ review.taste_rating }}
             </li>
             <li class="mr-5">
-              <img src="{% static 'core/icons8-restaurant-64.png' %}" alt="service" class="w-7 h-7"> 
+              <img src="{% static 'core/icons8-restaurant-64.png' %}" alt="service" class="w-7 h-7" />
               {{ review.service_rating }}
             </li>
             <li class="mr-5">
-              <img src="{% static 'core/icons8-purse-32.png' %}" alt="purse" class="w-7 h-7 p-1">
+              <img src="{% static 'core/icons8-purse-32.png' %}" alt="purse" class="w-7 h-7 p-1" />
               {{ review.value_rating }}
             </li>
           </ul>
@@ -51,22 +45,23 @@
         <ul class="text-lg font-bold">
           <li class="flex mb-3 items-center">
             <div class="mr-3">
-              <img src="https://img.icons8.com/fluency-systems-filled/48/null/restaurant-building.png"  class="w-7 h-7">            </div>
-              <div>
-                <span class="font-semibold">{{ review.restaurant.name }}</span>
-              </div>
-            </li>
-            <li class="flex mb-3 review">
-              <div class="mr-3">
-                <img src="https://img.icons8.com/ios-glyphs/30/null/inscription.png" class="review-image w-7 4-7">
-              </div>
-              <div class="review-text">
-                <span class="font-semibold">{{ review.review }}</span>
-              </div>
-            </li>
-            <li class="text-gray-600 text-sm font-normal mb-2">
-              {{ review.created_at|date:"Y-m-d" }} posted
-            </li>
+              <img src="https://img.icons8.com/fluency-systems-filled/48/null/restaurant-building.png" class="w-7 h-7" />
+            </div>
+            <div>
+              <span class="font-semibold">{{ review.restaurant.name }}</span>
+            </div>
+          </li>
+          <li class="flex mb-3 review">
+            <div class="mr-3">
+              <img src="https://img.icons8.com/ios-glyphs/30/null/inscription.png" class="review-image w-7 4-7" />
+            </div>
+            <div class="review-text">
+              <span class="font-semibold">{{ review.review }}</span>
+            </div>
+          </li>
+          <li class="text-gray-600 text-sm font-normal mb-2">
+            {{ review.created_at|date:"Y-m-d" }} posted
+          </li>
         </ul>
       </div>
       <div class="w-1/3 bg-slate-50 rounded-lg overflow-hidden shadow-xl">
@@ -79,7 +74,7 @@
             </div>
             <p class="mb-10">
               <span class="text-xl font-bold flex">
-                <img src="https://img.icons8.com/arcade/64/null/star.png" class="w-10 h-10">
+                <img src="https://img.icons8.com/arcade/64/null/star.png" class="w-10 h-10" />
                 <span class="text-3xl font-bold text-orange-500 pl-1">
                   {{ review.avg_rating }}
                 </span>
@@ -91,23 +86,24 @@
               </h2>
             </div>
             <p>
-              <span class="text-xl font-bold flex">    
-                <img src="https://img.icons8.com/arcade/64/null/star.png" class="w-10 h-10">
+              <span class="text-xl font-bold flex">
+                <img src="https://img.icons8.com/arcade/64/null/star.png" class="w-10 h-10" />
                 <span class="text-3xl font-bold text-orange-500 pl-1">
                   {{ viewer_rating }}
                 </span>
               </span>
             </p>
-          </div>          
+          </div>
         </div>
       </div>
     </div>
-    
+
     <p class="border-t-2 border-slate-200/70 mx-48 mt-20"></p>
 
+    <!-- add comment section  -->
     <div class="px-10 mt-5">
-      <h2 class="font-bold text-4xl text-center mt-20 mb-3">
-        Add a comment to {{ review.user.username }}
+      <h2 class="font-bold text-2xl text-start mt-10 mb-3">
+        Evaluate "{{ review.user.username }}'s" review
       </h2>
       <form method="post">
         {% csrf_token %}
@@ -117,39 +113,42 @@
               {{ comment_form.name.label }}
             </label>
             {{ comment_form.name }}
-            <label class="block font-bold text-xl mb-2 mt-5">
-              {{ comment_form.avg_rating.label }}
-            </label>
-            <div class="grid grid-cols-5 gap-2 mb-5">
-              {% for radio in comment_form.avg_rating %}
-              <div class="flex items-center">
-                {{ radio }}
+            <div>
+              <div class="col-span-1 my-4">
+                <label class="block font-bold text-xl mb-2">
+                  {{ comment_form.avg_rating.label }}
+                </label>
+                
+                <select name="{{ comment_form.avg_rating.name }}">
+                  {% for choice in comment_form.avg_rating.field.choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                  {% endfor %}
+                </select>
               </div>
-              {% endfor %}
+
+              <div class="col-span-1">
+                <div class="flex flex-col">
+                  <label class="block font-bold text-xl mb-2">
+                    {{ comment_form.comment.label }}
+                  </label>
+                  {{ comment_form.comment }}
+                </div>
+              </div>
+              <button type="submit" class="bg-amber-600 text-white hover:bg-amber-900 font-bold py-1 rounded-lg text-2xl mt-6">
+                Submit
+              </button>
             </div>
-            <button type="submit" class="bg-amber-900 text-white font-bold py-1 rounded-lg text-2xl mt-6">
-              Submit
-            </button>
           </div>
-          <div class="col-span-1">
-            <div class="flex flex-col">
-              <label class="block font-bold text-xl mb-2">
-                {{ comment_form.comment.label }}
-              </label>
-              {{ comment_form.comment }}
-            </div>
-          </div>
-        </div>
       </form>
-    </div>    
-    
+    </div>
+
     <p class="border-t-2 border-slate-200/70 mx-48 mt-20"></p>
 
-    <div class="px-10 mb-8">
-      <h2 class="font-bold text-4xl text-center pb-4 mt-16">Comments</h2>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="px-10 mb-4">
+      <h2 class="font-bold text-2xl text-start pb-4 mt-16">Others views</h2>
+      <div class="flex flex-col-reverse justify-center">
         {% for c in comments %}
-        <div class="bg-slate-100 border border-gray-300 p-4 rounded-lg shadow-md">
+        <div class="bg-slate-100 border border-gray-300 p-4 mb-4 rounded-lg shadow-md">
           <p class="text-xl font-bold">
             {{ c.name }}
             <span class="ml-2">
@@ -168,10 +167,7 @@
         {% endfor %}
       </div>
     </div>
-
   </section>
-
 </main>
-
 
 {% endblock content %}

@@ -3,7 +3,6 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 
 
-
 class CustomUserManager(BaseUserManager):
 
     # Create two methods: create_user and create_superuser
@@ -44,7 +43,7 @@ class CustomUser(AbstractUser):
     # we have to wait at least until this step to run the migrations (until we create our own user model).
     # The REQUIRED_FIELDS should be equal to ['username'] because this variable represents field names that will
     # be prompted for when creating a user via the createsuperuser management command.
-    
+
     # first_name = None
     # last_name = None
     # is_superuser = None
@@ -59,7 +58,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-    
+
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=100, null=False)
@@ -104,13 +103,15 @@ class Review(models.Model):
     class Meta:
         indexes = [models.Index(fields=['-created_at']),]
         ordering = ['-created_at']
-    
+
     def save(self, *args, **kwargs):
-        self.avg_rating = round((self.taste_rating + self.service_rating + self.value_rating) / 3, 1)
+        self.avg_rating = round(
+            (self.taste_rating + self.service_rating + self.value_rating) / 3, 1)
         super(Review, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.user} reviewed on {self.menu} and {self.restaurant}'
+
 
 class Contact(models.Model):
     name = models.CharField(max_length=100, null=False)
@@ -123,18 +124,19 @@ class Contact(models.Model):
 
 
 class Comment(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='comments')
+    review = models.ForeignKey(
+        Review, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=80,  null=False)
     comment = models.TextField(null=False)
-    avg_rating = models.IntegerField( null=False)
+    avg_rating = models.IntegerField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
     class Meta():
         ordering = ['-created_at']
         indexes = [models.Index(fields=['-created_at'])]
-    
+
     def __str__(self):
         return f'{self.name} commented on {self.review}'
-
 
 
 # Use Django's default function to create user

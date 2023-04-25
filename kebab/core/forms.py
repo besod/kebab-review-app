@@ -259,7 +259,7 @@ class CommentForm(forms.ModelForm):
     name = forms.CharField(
         max_length=80,
         widget=forms.TextInput(attrs={
-            'class': 'border-2 border-gray-400 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-900 bg-amber-50',
+            'class': 'border-2 border-gray-400 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-600 bg-slate-50',
             'placeholder': 'Your username'
         }))
     avg_rating = forms.ChoiceField(
@@ -268,7 +268,7 @@ class CommentForm(forms.ModelForm):
                                    }))
     comment = forms.CharField(
         widget=forms.Textarea(attrs={
-            'class': 'border-2 border-gray-400 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-900 bg-amber-50',
+            'class': 'border-2 border-gray-400 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-600 bg-slate-50',
             'placeholder': 'Leave your comment here.'
         }))
 

@@ -18,4 +18,5 @@ urlpatterns = [
     path('account_settings/', views.account_settings, name='account_settings'),
     path('search/', views.search_results, name='search_results'),
     path('detail/<int:review_id>/like/', views.like, name='like'),
+    path('about/', views.about, name='about'),
 ]

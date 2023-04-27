@@ -11,18 +11,24 @@
           class="block text-gray-700 font-bold mb-2"
           for="{{ field.id_for_label }}"
         >
-          {% if field.label == 'Menu' %} {{ field.label }}:
-          {{form.instance.menu}} {% elif field.label == 'Restaurant' %} {{
-          field.label }}: {{form.instance.restaurant }} {% else %} {{
-          field.label }} {% endif %}
+        {{ field.label }}:{{ form.instance. }}
+        {% if field.label != 'Avg rating' %}
+          {% if field.label == 'Menu' %} 
+            {{ field.label }}: {{form.instance.menu}}
+          {% elif field.label == 'Restaurant' %}
+            {{ field.label }}: {{form.instance.restaurant }}
+          {% else %}
+            {{field.label }}
+          {% endif %}
         </label>
         <input
-          type="{{ field.field.widget.input_type }}"
-          name="{{ field.name }}"
-          id="{{ field.id_for_label }}"
-          value="{{ field.value }}"
-          class="appearance-none border border-gray-200 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
+        type="{{ field.field.widget.input_type }}"
+        name="{{ field.name }}"
+        id="{{ field.id_for_label }}"
+        value="{{ field.value }}"
+        class="appearance-none border border-gray-200 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:border-blue-500"
         />
+        {% endif %}
         {% if field.help_text %}
         <small class="text-gray-500">{{ field.help_text }}</small>
         {% endif %} {% if field.errors %}

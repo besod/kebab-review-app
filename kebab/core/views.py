@@ -163,6 +163,7 @@ def user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
     reviews = Review.objects.filter(user=user)
     context = {'user': user, 'reviews': reviews}
+    
     return render(request, 'account/profile.html', context)
 
 
@@ -216,7 +217,7 @@ def search_results(request):
         )
 
     if restaurant_name:
-        reviews = reviews.filter(restaurant__name=restaurant_name)
+        reviews = reviews.filter(restaurant__name=restaurant_name, )
     elif menu_name:
         reviews = reviews.filter(menu__menu=menu_name)
     elif reviewer_name:
@@ -244,7 +245,7 @@ def account_settings(request):
 
 def like(request, review_id):
     review = get_object_or_404(Review, id=review_id)
-    review.like_count +=1
+    review.like_count += 1
     review.save()
     return JsonResponse({"review_like_count": review.like_count})
 

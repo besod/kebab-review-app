@@ -295,7 +295,7 @@ class ReviewForm(forms.ModelForm):
         model = Review
         exclude = ['like_count', 'user']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['menu'] = forms.CharField(max_length=255)
-        self.fields['restaurant'] = forms.CharField(max_length=255)
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     # self.fields['menu'] = forms.CharField(max_length=255)
+    #     # self.fields['restaurant'] = forms.CharField(max_length=255)
